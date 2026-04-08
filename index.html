@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>시각스튜디오</title>
+
+  <!-- 🔥 Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu&family=Nanum+Pen+Script&family=Gowun+Dodum&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="header">
+    <button class="btn" onclick="prevDay()">←</button>
+    <h1 id="date"></h1>
+    <button class="btn" onclick="nextDay()">→</button>
+  </div>
+
+  <div id="canvas"></div>
+
+  <div class="controls">
+    <input type="file" id="upload" accept="image/*" hidden>
+    <label for="upload" class="btn">사진 업로드</label>
+    <button class="btn" onclick="addSticker()">스티커 추가</button>
+  </div>
+
+  <!-- 🔥 중요 -->
+  <script type="module" src="script.js"></script>
+
+</body>
+</html>
