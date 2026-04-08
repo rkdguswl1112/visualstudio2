@@ -41,16 +41,16 @@ const colors = [
 
 // 🔥 스티커 이미지 (쉼표 중요!!)
 const stickerImages = [
-  "sticker/스티커-01.png",
-  "sticker/스티커-02.png",
-  "sticker/스티커-03.png",
-  "sticker/스티커-04.png",
-  "sticker/스티커-05.png",
-  "sticker/스티커-06.png",
-  "sticker/스티커-07.png",
-  "sticker/스티커-08.png",
-  "sticker/스티커-09.png",
-  "sticker/스티커-10.png",
+  "스티커-01.png",
+  "스티커-02.png",
+  "스티커-03.png",
+  "스티커-04.png",
+  "스티커-05.png",
+  "스티커-06.png",
+  "스티커-07.png",
+  "스티커-08.png",
+  "스티커-09.png",
+  "스티커-10.png",
 ];
 
 let currentDate = new Date();
