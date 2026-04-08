@@ -21,8 +21,16 @@ const colors = ["#000000", "#ff5c5c", "#ffb84d", "#4d94ff", "#66cc99", "#cc66ff"
 
 // 🔥 [중요] 파일명을 수동으로 하나씩 적었습니다. (01, 02... 형식이 맞는지 꼭 확인!)
 const stickerImages = [
-  "스티커-01.png", "스티커-02.png", "스티커-03.png", "스티커-04.png", "스티커-05.png",
-  "스티커-06.png", "스티커-07.png", "스티커-08.png", "스티커-09.png", "스티커-10.png"
+  "스티커-01.png", 
+  "스티커-02.png", 
+  "스티커-03.png", 
+  "스티커-04.png", 
+  "스티커-05.png",
+  "스티커-06.png", 
+  "스티커-07.png", 
+  "스티커-08.png", 
+  "스티커-09.png", 
+  "스티커-10.png"
 ];
 
 const canvas = document.getElementById("canvas");
