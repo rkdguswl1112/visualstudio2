@@ -283,3 +283,7 @@ canvas.addEventListener("dblclick", () => {
 // 실행
 updateDate();
 listenRealtime();
+
+window.addSticker = addSticker;
+window.prevDay = prevDay;
+window.nextDay = nextDay;
