@@ -20,37 +20,22 @@ const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
 const addStickerBtn = document.getElementById("addStickerBtn");
 
-const fonts = ["Gaegu", "Nanum Pen Script", "Gowun Dodum"];
-const colors = ["#000000", "#ff5c5c", "#ffb84d", "#4d94ff"];
-// ⚠️ 파일명을 깃허브 상의 영문 이름과 꼭 맞춰주세요 (예: s01.png)
-const stickerImages = [
-  "s01.png", 
-  "s02.png", 
-  "s03.png", 
-  "s04.png", 
-  "s05.png", 
-  "s06.png", 
-  "s07.png", 
-  "s08.png", 
-  "s09.png", 
-  "s10.png"
-];
+// 🔥 구글 폰트 및 설정
+const fonts = ["Gaegu", "Nanum Pen Script", "Gowun Dodum", "Arial"];
+const colors = ["#000000", "#ff5c5c", "#ffb84d", "#4d94ff", "#66cc99", "#cc66ff", "#ff66a3"];
+const stickerImages = ["s01.png", "s02.png", "s03.png", "s04.png", "s05.png", "s06.png", "s07.png", "s08.png", "s09.png", "s10.png"];
 
 let currentDate = new Date();
 let isRendering = false;
-let unsubscribe = null; // 실시간 감시 해제용
+let unsubscribe = null;
 
-function formatDate(date) {
-  return date.toISOString().split("T")[0];
-}
+function formatDate(date) { return date.toISOString().split("T")[0]; }
 
-// 🔥 데이터 저장 (현재 선택된 날짜에 저장)
+// 🔥 데이터 저장 함수
 async function saveData() {
-  if (isRendering) return;
-
+  if (isRendering) return; 
   const key = formatDate(currentDate);
-  const allStickers = document.querySelectorAll(".sticker");
-  const stickersData = Array.from(allStickers).map(el => {
+  const stickersData = Array.from(document.querySelectorAll(".sticker")).map(el => {
     const textarea = el.querySelector("textarea");
     return {
       text: textarea.value,
@@ -64,21 +49,17 @@ async function saveData() {
   });
 
   const baseImg = document.querySelector("#baseImage");
-  const data = {
-    baseImage: baseImg ? baseImg.src : "",
-    stickers: stickersData,
-    x: baseImg ? parseFloat(baseImg.dataset.x) : 0.5,
-    y: baseImg ? parseFloat(baseImg.dataset.y) : 0.5
-  };
-
   try {
-    await setDoc(doc(db, "diary", key), data);
-  } catch (err) {
-    console.error("저장 실패:", err);
-  }
+    await setDoc(doc(db, "diary", key), {
+      baseImage: baseImg ? baseImg.src : "",
+      stickers: stickersData,
+      x: baseImg ? parseFloat(baseImg.dataset.x) : 0.5,
+      y: baseImg ? parseFloat(baseImg.dataset.y) : 0.5
+    });
+  } catch (err) { console.error("공유 저장 실패:", err); }
 }
 
-// 🔥 스티커 생성 (글자 씹힘 방지 로직 고도화)
+// 🔥 스티커 생성 (랜덤 폰트/색상 적용)
 function addSticker(text = "", x = null, y = null, font = null, color = null, locked = false, savedImg = null) {
   const sticker = document.createElement("div");
   sticker.className = "sticker";
@@ -89,8 +70,10 @@ function addSticker(text = "", x = null, y = null, font = null, color = null, lo
   const textarea = document.createElement("textarea");
   textarea.className = "sticker-text";
   textarea.value = text;
-  textarea.style.fontFamily = font || fonts[0];
-  textarea.style.color = color || colors[0];
+  
+  // 🎨 랜덤 폰트/색상 설정
+  textarea.style.fontFamily = font || fonts[Math.floor(Math.random() * fonts.length)];
+  textarea.style.color = color || colors[Math.floor(Math.random() * colors.length)];
   
   if (locked) {
     textarea.readOnly = true;
@@ -99,35 +82,34 @@ function addSticker(text = "", x = null, y = null, font = null, color = null, lo
 
   sticker.appendChild(img);
   sticker.appendChild(textarea);
-  sticker.style.left = (x || 50) + "px";
-  sticker.style.top = (y || 50) + "px";
+  sticker.style.left = (x || Math.random() * (window.innerWidth - 150)) + "px";
+  sticker.style.top = (y || Math.random() * (window.innerHeight - 150)) + "px";
 
   makeDraggable(sticker, textarea);
   canvas.appendChild(sticker);
 
-  // 💥 한글 씹힘 방지: 입력 중에는 실시간 저장을 막음
+  // 💥 한글 씹힘 방지: 입력이 완전히 끝날 때만 저장
   let isComposing = false;
   textarea.addEventListener("compositionstart", () => { isComposing = true; });
-  textarea.addEventListener("compositionend", () => { 
-    isComposing = false; 
-    // 조합이 끝난 후 바로 저장하지 않고 blur 시점에 저장하도록 유도 (포커스 뺏김 방지)
-  });
+  textarea.addEventListener("compositionend", () => { isComposing = false; });
 
   textarea.addEventListener("blur", () => {
     if (textarea.value.trim() !== "") {
       textarea.readOnly = true;
       textarea.style.pointerEvents = "none";
     }
-    saveData(); // 입력이 완전히 끝나고 창을 나갈 때만 DB에 저장
+    saveData();
   });
 }
 
+// 🔥 드래그 기능
 function makeDraggable(el, textarea) {
   let offsetX, offsetY;
   let isDragging = false;
   el.addEventListener("mousedown", (e) => {
     if (e.target === textarea && !textarea.readOnly) return;
     isDragging = true;
+    el.style.zIndex = 1000;
     const rect = el.getBoundingClientRect();
     offsetX = e.clientX - rect.left;
     offsetY = e.clientY - rect.top;
@@ -142,6 +124,7 @@ function makeDraggable(el, textarea) {
   function stop() {
     if (isDragging) {
       isDragging = false;
+      el.style.zIndex = "";
       document.removeEventListener("mousemove", move);
       document.removeEventListener("mouseup", stop);
       saveData();
@@ -149,24 +132,17 @@ function makeDraggable(el, textarea) {
   }
 }
 
-// 🔥 날짜별 실시간 감시 함수
+// 🔥 실시간 공유 감시 (핵심 로직 수정)
 function listenRealtime() {
-  if (unsubscribe) unsubscribe(); // 이전 날짜 감시 중단
-
+  if (unsubscribe) unsubscribe();
   const key = formatDate(currentDate);
   dateEl.innerText = key;
 
   unsubscribe = onSnapshot(doc(db, "diary", key), (docSnap) => {
-    if (isRendering) return;
-    isRendering = true;
-    
-    // 💥 중요: 현재 내가 타이핑 중인 스티커가 있다면 화면을 갱신하지 않음 (글자 끊김 방지)
-    const activeTextarea = document.activeElement;
-    if (activeTextarea && activeTextarea.tagName === "TEXTAREA") {
-      isRendering = false;
-      return;
-    }
+    // 💥 내가 지금 타이핑 중이면 업데이트를 잠시 미룸 (글자 끊김 방지)
+    if (document.activeElement.tagName === "TEXTAREA") return;
 
+    isRendering = true;
     canvas.innerHTML = "";
     if (docSnap.exists()) {
       const data = docSnap.data();
@@ -186,33 +162,18 @@ function listenRealtime() {
   });
 }
 
-prevBtn.addEventListener("click", () => {
-  currentDate.setDate(currentDate.getDate() - 1);
-  listenRealtime();
-});
-
-nextBtn.addEventListener("click", () => {
-  currentDate.setDate(currentDate.getDate() + 1);
-  listenRealtime();
-});
-
+// 이벤트 리스너
+prevBtn.addEventListener("click", () => { currentDate.setDate(currentDate.getDate() - 1); listenRealtime(); });
+nextBtn.addEventListener("click", () => { currentDate.setDate(currentDate.getDate() + 1); listenRealtime(); });
 addStickerBtn.addEventListener("click", () => addSticker());
-
 upload.addEventListener("change", (e) => {
   const file = e.target.files[0];
   if (!file) return;
   const reader = new FileReader();
   reader.onload = async () => {
-    const key = formatDate(currentDate);
-    await setDoc(doc(db, "diary", key), {
-      baseImage: reader.result,
-      stickers: [],
-      x: Math.random(),
-      y: Math.random()
-    }, { merge: true });
+    await setDoc(doc(db, "diary", formatDate(currentDate)), { baseImage: reader.result, stickers: [] }, { merge: true });
   };
   reader.readAsDataURL(file);
 });
 
-// 초기 실행
 listenRealtime();
