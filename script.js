@@ -26,7 +26,19 @@ const addStickerBtn = document.getElementById("addStickerBtn");
 // 데이터 정의
 const fonts = ["Gaegu", "Nanum Pen Script", "Gowun Dodum", "Arial"];
 const colors = ["#000000", "#ff5c5c", "#ffb84d", "#4d94ff", "#66cc99", "#cc66ff", "#ff66a3"];
-const stickerImages = Array.from({ length: 10 }, (_, i) => `스티커-${(i + 1).toString().padStart(2, '0')}.png`);
+// 🔥
+const stickerImages = [
+  "스티커-01.png",
+  "스티커-02.png",
+  "스티커-03.png",
+  "스티커-04.png",
+  "스티커-05.png",
+  "스티커-06.png",
+  "스티커-07.png",
+  "스티커-08.png",
+  "스티커-09.png",
+  "스티커-10.png"
+];
 
 let currentDate = new Date();
 let isRendering = false; // 리렌더링 중 자동 저장을 막기 위한 플래그
