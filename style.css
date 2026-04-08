@@ -1,75 +1,57 @@
 body {
   margin: 0;
   height: 100vh;
-
-  /* 🔥 중앙정렬 제거 */
-  font-family: sans-serif;
+  font-family: 'Gowun Dodum', sans-serif;
   background: #f5f5f5;
   overflow: hidden;
 }
 
-/* 🔥 날짜 (상단 중앙 고정) */
 .header {
   position: fixed;
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-
   display: flex;
   align-items: center;
   gap: 20px;
-
   z-index: 10;
 }
 
 h1 {
   margin: 0;
-  font-size: 40px;
+  font-size: 32px;
 }
 
-/* 🔥 캔버스 → 전체 화면 */
 #canvas {
   width: 100vw;
   height: 100vh;
-
   position: relative;
   overflow: hidden;
 }
 
-/* 🔥 업로드 이미지 (랜덤 배치용) */
-#baseImage {
-  position: absolute;
-  width: 300px;
-  pointer-events: none;
-}
-
-/* 버튼 */
 .btn {
-  padding: 12px 18px;
+  padding: 10px 15px;
   border: 1px solid #aaa;
   background: #fff;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
+  border-radius: 5px;
 }
 
 .btn:hover {
   background: #f0f0f0;
 }
 
-/* 🔥 버튼 위치 → 오른쪽 하단 */
 .controls {
   position: fixed;
   right: 20px;
   bottom: 20px;
-
   display: flex;
   flex-direction: column;
   gap: 10px;
-
   z-index: 10;
 }
 
-/* 🔥 스티커 */
 .sticker {
   position: absolute;
   width: 140px;
@@ -82,34 +64,23 @@ h1 {
   pointer-events: none;
 }
 
-/* 🔥 텍스트 */
 .sticker-text {
   position: absolute;
-
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
   width: 80%;
   text-align: center;
-
   border: none;
   background: transparent;
   outline: none;
   resize: none;
-
   font-size: 14px;
-  line-height: 1.4;
-
   cursor: text;
   z-index: 2;
-
-  white-space: pre-wrap;
-  word-break: break-word;
-  overflow-wrap: break-word;
+  overflow: hidden;
 }
 
-/* 🔥 잠긴 텍스트 (선택) */
 .sticker-text[readonly] {
-  opacity: 0.85;
+  cursor: default;
 }
