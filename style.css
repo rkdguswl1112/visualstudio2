@@ -12,7 +12,7 @@ body {
 
 .header {
   position: fixed;
-  top: 40px; 
+  top: 60px; 
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -76,12 +76,10 @@ h1, #date {
 
 .sticker {
   position: absolute;
-  /* width는 JS에서 랜덤으로 부여합니다 */
   cursor: move;
   background: transparent;
   border: none;
   box-shadow: none;
-  /* 🔥 텍스트 중앙 배치를 위한 설정 */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -95,22 +93,31 @@ h1, #date {
 
 .sticker-text {
   position: absolute;
-  /* 🔥 이미지의 정중앙에 오도록 수정 */
+  /* 🔥 정중앙 배치를 위해 50% 설정 후 미세 조정 */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%;
+  
+  /* 🔥 텍스트가 중앙보다 위로 쏠려 보인다면 padding-top으로 미세 조정 가능 */
+  padding-top: 2px; 
+  
+  width: 85%;
   text-align: center;
   border: none;
   background: transparent;
   outline: none;
   resize: none;
-  font-size: 16px;
+
+  /* 🔥 폰트 크기 살짝 축소 (기존 18px -> 14px) */
+  font-size: 14px; 
   font-weight: bold;
   cursor: text;
   z-index: 2;
-  text-shadow: 2px 2px 0px white, -2px -2px 0px white, 2px -2px 0px white, -2px 2px 0px white;
+  
+  /* 글자가 잘 보이도록 테두리 효과 */
+  text-shadow: 1.5px 1.5px 0px white, -1.5px -1.5px 0px white, 1.5px -1.5px 0px white, -1.5px 1.5px 0px white;
   overflow: hidden;
+  line-height: 1.2;
 }
 
 .sticker-text[readonly] {
