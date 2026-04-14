@@ -5,8 +5,8 @@ const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
 const addStickerBtn = document.getElementById("addStickerBtn");
 
-// 🔥 폰트 고정 (Gowun Dodum)
-const FIXED_FONT = "'Gowun Dodum', sans-serif";
+// 🔥 스티커에 사용할 랜덤 폰트 리스트
+const fonts = ["Gaegu", "Nanum Pen Script", "Gowun Dodum", "Arial"];
 const colors = ["#000000", "#ff5c5c", "#ffb84d", "#4d94ff", "#66cc99", "#cc66ff", "#ff66a3"];
 const stickerImages = ["s01.png","s02.png","s03.png","s04.png","s05.png","s06.png","s07.png","s08.png","s09.png","s10.png"];
 
@@ -17,10 +17,9 @@ function formatDate(date) {
   return date.toISOString().split("T")[0];
 }
 
-// 🔥 로컬 저장소에 데이터 저장 (GitHub Pages용)
+// 데이터 저장
 function saveData() {
   if (isRendering) return;
-
   const key = formatDate(currentDate);
   const stickersData = Array.from(document.querySelectorAll(".sticker")).map(el => {
     const textarea = el.querySelector("textarea");
@@ -28,12 +27,12 @@ function saveData() {
       text: textarea.value,
       x: parseInt(el.style.left),
       y: parseInt(el.style.top),
+      font: textarea.style.fontFamily, // 🔥 개별 폰트 저장
       color: textarea.style.color,
       locked: textarea.readOnly,
       imgSrc: el.querySelector("img").getAttribute("src")
     };
   });
-
   const baseImg = document.querySelector("#baseImage");
   const dataToSave = {
     baseImage: baseImg ? baseImg.src : "",
@@ -42,15 +41,12 @@ function saveData() {
     y: baseImg ? parseFloat(baseImg.dataset.y) : 0.5,
     rotation: baseImg ? parseFloat(baseImg.dataset.rotation) : 0
   };
-
   localStorage.setItem(key, JSON.stringify(dataToSave));
 }
 
-// 🔥 데이터 불러오기
 function loadData() {
   const key = formatDate(currentDate);
   const savedData = localStorage.getItem(key);
-  
   if (savedData) {
     renderData(JSON.parse(savedData));
   } else {
@@ -58,8 +54,8 @@ function loadData() {
   }
 }
 
-// 🔥 스티커 생성 (폰트 'Gowun Dodum' 고정)
-function addSticker(text = "", x = null, y = null, color = null, locked = false, savedImg = null) {
+// 🔥 스티커 생성 (폰트 랜덤 설정)
+function addSticker(text = "", x = null, y = null, font = null, color = null, locked = false, savedImg = null) {
   const sticker = document.createElement("div");
   sticker.className = "sticker";
 
@@ -70,8 +66,8 @@ function addSticker(text = "", x = null, y = null, color = null, locked = false,
   textarea.className = "sticker-text";
   textarea.value = text;
   
-  // 폰트 설정
-  textarea.style.fontFamily = FIXED_FONT;
+  // 🔥 전달받은 폰트가 없으면 fonts 배열에서 랜덤 선택
+  textarea.style.fontFamily = font || fonts[Math.floor(Math.random() * fonts.length)];
   textarea.style.color = color || colors[Math.floor(Math.random() * colors.length)];
 
   if (locked) {
@@ -98,11 +94,9 @@ function addSticker(text = "", x = null, y = null, color = null, locked = false,
   });
 }
 
-// 드래그 기능
 function makeDraggable(el, textarea) {
   let offsetX, offsetY;
   let isDragging = false;
-
   el.addEventListener("mousedown", (e) => {
     if (e.target === textarea && !textarea.readOnly) return;
     isDragging = true;
@@ -113,13 +107,11 @@ function makeDraggable(el, textarea) {
     document.addEventListener("mousemove", move);
     document.addEventListener("mouseup", stop);
   });
-
   function move(e) {
     if (!isDragging) return;
     el.style.left = (e.clientX - offsetX) + "px";
     el.style.top = (e.clientY - offsetY) + "px";
   }
-
   function stop() {
     isDragging = false;
     el.style.zIndex = "";
@@ -129,11 +121,9 @@ function makeDraggable(el, textarea) {
   }
 }
 
-// 화면 렌더링
 function renderData(data) {
   isRendering = true;
   canvas.innerHTML = "";
-
   if (data.baseImage) {
     const img = document.createElement("img");
     img.id = "baseImage";
@@ -148,14 +138,13 @@ function renderData(data) {
     img.dataset.rotation = data.rotation;
     canvas.appendChild(img);
   }
-
   if (data.stickers) {
-    data.stickers.forEach(s => addSticker(s.text, s.x, s.y, s.color, s.locked, s.imgSrc));
+    // 🔥 저장된 폰트 정보를 함께 전달하여 렌더링
+    data.stickers.forEach(s => addSticker(s.text, s.x, s.y, s.font, s.color, s.locked, s.imgSrc));
   }
   isRendering = false;
 }
 
-// 날짜 이동 이벤트
 prevBtn.addEventListener("click", () => {
   currentDate.setDate(currentDate.getDate() - 1);
   dateEl.innerText = formatDate(currentDate);
@@ -170,16 +159,13 @@ nextBtn.addEventListener("click", () => {
 
 addStickerBtn.addEventListener("click", () => addSticker());
 
-// 🔥 배경 업로드 실행 로직
 upload.addEventListener("change", (e) => {
   const file = e.target.files[0];
   if (!file) return;
-
   const reader = new FileReader();
   reader.onload = () => {
     const key = formatDate(currentDate);
     const savedData = JSON.parse(localStorage.getItem(key) || '{"stickers":[]}');
-    
     const newData = {
       baseImage: reader.result,
       stickers: savedData.stickers,
@@ -193,7 +179,7 @@ upload.addEventListener("change", (e) => {
   reader.readAsDataURL(file);
 });
 
-// 초기 실행
+// 시스템 UI용 폰트는 Gowun Dodum으로 고정
 dateEl.innerText = formatDate(currentDate);
-dateEl.style.fontFamily = FIXED_FONT;
+dateEl.style.fontFamily = "'Gowun Dodum', sans-serif";
 loadData();
