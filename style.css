@@ -1,9 +1,11 @@
+/* 전체 레이아웃 설정 */
 body {
   margin: 0;
   height: 100vh;
+  /* 기본 폰트를 고운 돋움으로 설정 */
   font-family: 'Gowun Dodum', sans-serif;
 
-  /* 🔥 배경 추가 */
+  /* 배경 이미지 설정 (GitHub Pages 경로 대응) */
   background-image: url("./background.png");
   background-size: cover;
   background-position: center;
@@ -12,6 +14,7 @@ body {
   overflow: hidden;
 }
 
+/* 상단 헤더 (날짜 및 이전/다음 버튼) */
 .header {
   position: fixed;
   top: 20px;
@@ -23,12 +26,15 @@ body {
   z-index: 10;
 }
 
-h1 {
+/* 제목 및 날짜 폰트 고정 */
+h1, #date {
   margin: 0;
   font-size: 32px;
-  color: #222; /* 🔥 배경 위에서 잘 보이게 */
+  color: #222;
+  font-family: 'Gowun Dodum', sans-serif !important;
 }
 
+/* 스티커들이 놓일 전체 캔버스 */
 #canvas {
   width: 100vw;
   height: 100vh;
@@ -36,20 +42,25 @@ h1 {
   overflow: hidden;
 }
 
+/* 공통 버튼 스타일 */
 .btn {
   padding: 10px 15px;
   border: 1px solid #aaa;
-  background: rgba(255, 255, 255, 0.85); /* 🔥 살짝 투명 */
+  background: rgba(255, 255, 255, 0.85);
   cursor: pointer;
   font-size: 14px;
   border-radius: 5px;
-  backdrop-filter: blur(5px); /* 🔥 요즘 느낌 */
+  backdrop-filter: blur(5px);
+  /* 버튼 폰트 고정 */
+  font-family: 'Gowun Dodum', sans-serif !important;
+  transition: background 0.2s;
 }
 
 .btn:hover {
   background: rgba(240, 240, 240, 0.9);
 }
 
+/* 하단 우측 컨트롤 영역 */
 .controls {
   position: fixed;
   right: 20px;
@@ -60,6 +71,7 @@ h1 {
   z-index: 10;
 }
 
+/* 스티커 개별 박스 */
 .sticker {
   position: absolute;
   width: 140px;
@@ -72,6 +84,7 @@ h1 {
   pointer-events: none;
 }
 
+/* 스티커 내부 텍스트 영역 (랜덤 폰트 적용을 위해 font-family 고정 해제) */
 .sticker-text {
   position: absolute;
   top: 50%;
@@ -88,10 +101,17 @@ h1 {
   font-size: 14px;
   cursor: text;
   z-index: 2;
-
   overflow: hidden;
+  
+  /* 주의: 여기서 font-family를 !important로 고정하면 JS의 랜덤 폰트가 무시됩니다. */
 }
 
 .sticker-text[readonly] {
   cursor: default;
+}
+
+/* 업로드된 배경 이미지 스타일 */
+#baseImage {
+  pointer-events: none;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
