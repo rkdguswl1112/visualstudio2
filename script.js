@@ -26,7 +26,7 @@ function saveData() {
       text: textarea.value,
       x: parseInt(el.style.left),
       y: parseInt(el.style.top),
-      width: parseInt(el.style.width), // 🔥 랜덤 크기 저장
+      width: parseInt(el.style.width),
       font: textarea.style.fontFamily,
       color: textarea.style.color,
       locked: textarea.readOnly,
@@ -54,13 +54,12 @@ function loadData() {
   }
 }
 
-// 🔥 스티커 생성 (크기 랜덤 범위 제한: 100px ~ 180px)
 function addSticker(text = "", x = null, y = null, width = null, font = null, color = null, locked = false, savedImg = null) {
   const sticker = document.createElement("div");
   sticker.className = "sticker";
   
-  // 크기 랜덤 설정 (최소 100px, 최대 180px 정도로 제한)
-  const randomWidth = width || Math.floor(Math.random() * 81) + 100;
+  // 크기 랜덤 설정 (최소 100px, 최대 160px 정도로 살짝 축소)
+  const randomWidth = width || Math.floor(Math.random() * 61) + 100;
   sticker.style.width = randomWidth + "px";
 
   const img = document.createElement("img");
@@ -142,12 +141,12 @@ function renderData(data) {
     canvas.appendChild(img);
   }
   if (data.stickers) {
-    // 🔥 저장된 너비(width) 정보 포함해서 렌더링
     data.stickers.forEach(s => addSticker(s.text, s.x, s.y, s.width, s.font, s.color, s.locked, s.imgSrc));
   }
   isRendering = false;
 }
 
+// 바탕화면 더블클릭 이스터에그
 canvas.addEventListener("dblclick", (e) => {
   if (e.target === canvas || e.target.id === "baseImage") {
     if (confirm("초기화하시겠습니까? (이 날의 모든 기록이 삭제됩니다)")) {
