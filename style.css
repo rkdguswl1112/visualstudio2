@@ -4,7 +4,7 @@ body {
   margin: 0;
   height: 100vh;
   font-family: 'Gowun Dodum', sans-serif;
-  background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("./background.png");
+  background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("./bg.png");
   background-size: cover;
   background-position: center;
   overflow: hidden;
