@@ -5,7 +5,13 @@ const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
 const addStickerBtn = document.getElementById("addStickerBtn");
 
-const STICKER_FONTS = ["'NeoDunggeunmo'", "'Gaegu'", "'Nanum Pen Script'", "'Gowun Dodum'", "Arial", "cursive"];
+// 🔥 구글 폰트 목록 업데이트 (더 다양해진 폰트들)
+const STICKER_FONTS = [
+    "'Gaegu'", "'Nanum Pen Script'", "'Gowun Dodum'", "'Gamja Flower'", 
+    "'Hi Melody'", "'Single Day'", "'East Sea Dokdo'", "'Poor Story'", 
+    "'Black Han Sans'", "'Dokdo'", "'NeoDunggeunmo'"
+];
+
 const colors = ["#ff0000", "#0000ff", "#008000", "#ff00ff", "#000000", "#ff6600"];
 const stickerImages = ["s01.png","s02.png","s03.png","s04.png","s05.png","s06.png","s07.png","s08.png","s09.png","s10.png"];
 
@@ -16,7 +22,7 @@ function formatDate(date) {
     return date.toISOString().split("T")[0];
 }
 
-// 데이터 저장 (사진 배열과 스티커 배열을 각각 저장)
+// 데이터 저장
 function saveData() {
     if (isRendering) return;
     const key = formatDate(currentDate);
@@ -58,7 +64,7 @@ function loadData() {
     }
 }
 
-// 사진 추가 함수
+// 사진 추가
 function addPhoto(src, x = null, y = null, rotation = null) {
     const img = document.createElement("img");
     img.className = "user-photo";
@@ -77,7 +83,7 @@ function addPhoto(src, x = null, y = null, rotation = null) {
     canvas.appendChild(img);
 }
 
-// 스티커 추가 함수
+// 스티커 추가 (랜덤 폰트 반영)
 function addSticker(text = "", x = null, y = null, width = null, rotation = null, font = null, color = null, locked = false, savedImg = null) {
     const sticker = document.createElement("div");
     sticker.className = "sticker";
@@ -91,6 +97,8 @@ function addSticker(text = "", x = null, y = null, width = null, rotation = null
     const textarea = document.createElement("textarea");
     textarea.className = "sticker-text";
     textarea.value = text;
+    
+    // 🔥 랜덤 구글 폰트 적용
     textarea.style.fontFamily = font || STICKER_FONTS[Math.floor(Math.random() * STICKER_FONTS.length)];
     textarea.style.color = color || colors[Math.floor(Math.random() * colors.length)];
     
@@ -127,7 +135,7 @@ function makeDraggable(el, textarea = null) {
     el.addEventListener("mousedown", (e) => {
         if (textarea && e.target === textarea && !textarea.readOnly) return;
         isDragging = true;
-        el.style.zIndex = 100;
+        el.style.zIndex = 2000;
         const rect = el.getBoundingClientRect();
         offsetX = e.clientX - rect.left;
         offsetY = e.clientY - rect.top;
@@ -192,7 +200,7 @@ upload.addEventListener("change", (e) => {
         const reader = new FileReader();
         reader.onload = () => {
             addPhoto(reader.result);
-            saveData(); // 각 사진 추가 후 바로 저장
+            saveData(); 
         };
         reader.readAsDataURL(file);
     });
