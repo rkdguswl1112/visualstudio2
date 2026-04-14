@@ -1,19 +1,15 @@
-/* 픽셀 폰트 로드 */
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
 body {
   margin: 0;
   height: 100vh;
   font-family: 'Gowun Dodum', sans-serif;
-  
-  /* Y2K 감성 배경 */
-  background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("./bg.png");
+  background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("./background.png");
   background-size: cover;
   background-position: center;
   overflow: hidden;
 }
 
-/* 상단 헤더 영역 */
 .header {
   position: fixed;
   top: 60px; 
@@ -44,7 +40,6 @@ h1, #date {
   overflow: hidden;
 }
 
-/* Y2K 입체 버튼 스타일 */
 .btn {
   padding: 8px 16px;
   background: #c0c0c0;
@@ -79,14 +74,51 @@ h1, #date {
   border: 2px ridge #fff;
 }
 
-/* 🔥 스티커 스타일: 흰색 배경과 선을 제거함 */
 .sticker {
   position: absolute;
-  width: 150px;
+  /* width는 JS에서 랜덤으로 부여합니다 */
   cursor: move;
-  background: transparent; /* 배경 제거 */
-  border: none;             /* 선 제거 */
-  box-shadow: none;         /* 그림자 제거(취향에 따라 유지 가능) */
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  /* 🔥 텍스트 중앙 배치를 위한 설정 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.sticker img
+.sticker img {
+  width: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.sticker-text {
+  position: absolute;
+  /* 🔥 이미지의 정중앙에 오도록 수정 */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  text-align: center;
+  border: none;
+  background: transparent;
+  outline: none;
+  resize: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: text;
+  z-index: 2;
+  text-shadow: 2px 2px 0px white, -2px -2px 0px white, 2px -2px 0px white, -2px 2px 0px white;
+  overflow: hidden;
+}
+
+.sticker-text[readonly] {
+  cursor: default;
+}
+
+#baseImage {
+  border: 8px solid white;
+  outline: 1px solid #ccc;
+  box-shadow: 10px 10px 20px rgba(0,0,0,0.3);
+}
