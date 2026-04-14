@@ -3,10 +3,9 @@ const upload = document.getElementById("upload");
 const dateEl = document.getElementById("date");
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
-// HTML에서 버튼 텍스트가 "코멘트 담기"여도 JS에서 제어할 변수명은 유지하거나 맞춰야 합니다.
 const addStickerBtn = document.getElementById("addStickerBtn");
 
-// 🔥 설정값: 폰트를 'Gowun Dodum'으로 완전히 고정
+// 🔥 폰트 고정 (Gowun Dodum)
 const FIXED_FONT = "'Gowun Dodum', sans-serif";
 const colors = ["#000000", "#ff5c5c", "#ffb84d", "#4d94ff", "#66cc99", "#cc66ff", "#ff66a3"];
 const stickerImages = ["s01.png","s02.png","s03.png","s04.png","s05.png","s06.png","s07.png","s08.png","s09.png","s10.png"];
@@ -18,7 +17,7 @@ function formatDate(date) {
   return date.toISOString().split("T")[0];
 }
 
-// 🔥 로컬 저장소에 데이터 저장 (GitHub Pages 전용)
+// 🔥 로컬 저장소에 데이터 저장 (GitHub Pages용)
 function saveData() {
   if (isRendering) return;
 
@@ -71,7 +70,7 @@ function addSticker(text = "", x = null, y = null, color = null, locked = false,
   textarea.className = "sticker-text";
   textarea.value = text;
   
-  // 모든 텍스트 영역에 동일 폰트 적용
+  // 폰트 설정
   textarea.style.fontFamily = FIXED_FONT;
   textarea.style.color = color || colors[Math.floor(Math.random() * colors.length)];
 
@@ -169,10 +168,9 @@ nextBtn.addEventListener("click", () => {
   loadData();
 });
 
-// "코멘트 담기" 버튼 클릭 시 실행
 addStickerBtn.addEventListener("click", () => addSticker());
 
-// 🔥 사진 업로드 실행 로직
+// 🔥 배경 업로드 실행 로직
 upload.addEventListener("change", (e) => {
   const file = e.target.files[0];
   if (!file) return;
@@ -195,7 +193,7 @@ upload.addEventListener("change", (e) => {
   reader.readAsDataURL(file);
 });
 
-// 초기 실행 및 폰트 적용
+// 초기 실행
 dateEl.innerText = formatDate(currentDate);
 dateEl.style.fontFamily = FIXED_FONT;
 loadData();
