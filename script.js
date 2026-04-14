@@ -5,9 +5,11 @@ const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
 const addStickerBtn = document.getElementById("addStickerBtn");
 
-const RANDOM_FONTS = ["Gaegu", "Nanum Pen Script", "Gowun Dodum", "Arial"];
-const SYSTEM_FONT = "'Gowun Dodum', sans-serif";
-const colors = ["#000000", "#ff5c5c", "#ffb84d", "#4d94ff", "#66cc99", "#cc66ff", "#ff66a3"];
+// 🔥 1. 스티커에 적용될 랜덤 폰트 후보들 (픽셀 폰트 포함 여러가지)
+const STICKER_FONTS = ["'NeoDunggeunmo'", "Gaegu", "Nanum Pen Script", "Gowun Dodum", "Arial", "cursive"];
+const SYSTEM_FONT = "'NeoDunggeunmo', sans-serif";
+
+const colors = ["#ff0000", "#0000ff", "#008000", "#ff00ff", "#000000", "#ff6600"];
 const stickerImages = ["s01.png","s02.png","s03.png","s04.png","s05.png","s06.png","s07.png","s08.png","s09.png","s10.png"];
 
 let currentDate = new Date();
@@ -17,6 +19,7 @@ function formatDate(date) {
   return date.toISOString().split("T")[0];
 }
 
+// 데이터 저장 (폰트 정보 포함)
 function saveData() {
   if (isRendering) return;
   const key = formatDate(currentDate);
@@ -27,7 +30,7 @@ function saveData() {
       x: parseInt(el.style.left),
       y: parseInt(el.style.top),
       width: parseInt(el.style.width),
-      font: textarea.style.fontFamily,
+      font: textarea.style.fontFamily, // 🔥 개별 폰트 저장
       color: textarea.style.color,
       locked: textarea.readOnly,
       imgSrc: el.querySelector("img").getAttribute("src")
@@ -54,12 +57,12 @@ function loadData() {
   }
 }
 
+// 🔥 2. 스티커 생성 시 폰트를 랜덤하게 부여
 function addSticker(text = "", x = null, y = null, width = null, font = null, color = null, locked = false, savedImg = null) {
   const sticker = document.createElement("div");
   sticker.className = "sticker";
   
-  // 크기 랜덤 설정 (최소 100px, 최대 160px 정도로 살짝 축소)
-  const randomWidth = width || Math.floor(Math.random() * 61) + 100;
+  const randomWidth = width || Math.floor(Math.random() * 51) + 100;
   sticker.style.width = randomWidth + "px";
 
   const img = document.createElement("img");
@@ -69,7 +72,8 @@ function addSticker(text = "", x = null, y = null, width = null, font = null, co
   textarea.className = "sticker-text";
   textarea.value = text;
   
-  textarea.style.fontFamily = font || RANDOM_FONTS[Math.floor(Math.random() * RANDOM_FONTS.length)];
+  // 🔥 저장된 폰트가 있으면 쓰고, 없으면 랜덤 리스트에서 선택
+  textarea.style.fontFamily = font || STICKER_FONTS[Math.floor(Math.random() * STICKER_FONTS.length)];
   textarea.style.color = color || colors[Math.floor(Math.random() * colors.length)];
   
   if (locked) {
@@ -82,7 +86,6 @@ function addSticker(text = "", x = null, y = null, width = null, font = null, co
   
   sticker.style.left = (x !== null ? x : Math.random() * (window.innerWidth - 200)) + "px";
   sticker.style.top = (y !== null ? y : Math.random() * (window.innerHeight - 200)) + "px";
-  sticker.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
   
   makeDraggable(sticker, textarea);
   canvas.appendChild(sticker);
@@ -134,19 +137,18 @@ function renderData(data) {
     img.style.width = "400px";
     img.style.left = (data.x * (window.innerWidth - 400)) + "px";
     img.style.top = (data.y * (window.innerHeight - 400)) + "px";
-    img.style.transform = `rotate(${data.rotation * 40 - 20}deg)`;
     img.dataset.x = data.x;
     img.dataset.y = data.y;
-    img.dataset.rotation = data.rotation;
     canvas.appendChild(img);
   }
   if (data.stickers) {
+    // 렌더링 시 저장된 font 값을 함께 넘겨줍니다.
     data.stickers.forEach(s => addSticker(s.text, s.x, s.y, s.width, s.font, s.color, s.locked, s.imgSrc));
   }
   isRendering = false;
 }
 
-// 바탕화면 더블클릭 이스터에그
+// [이스터에그] 바탕화면 더블클릭 초기화
 canvas.addEventListener("dblclick", (e) => {
   if (e.target === canvas || e.target.id === "baseImage") {
     if (confirm("초기화하시겠습니까? (이 날의 모든 기록이 삭제됩니다)")) {
@@ -191,6 +193,7 @@ upload.addEventListener("change", (e) => {
   reader.readAsDataURL(file);
 });
 
+// 초기화: 날짜 UI는 픽셀 폰트로
 dateEl.innerText = formatDate(currentDate);
 dateEl.style.fontFamily = SYSTEM_FONT;
 loadData();
