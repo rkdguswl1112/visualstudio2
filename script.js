@@ -5,7 +5,6 @@ const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
 const addStickerBtn = document.getElementById("addStickerBtn");
 
-// 스티커 텍스트용 랜덤 폰트 (시스템 UI는 style.css에서 NeoDunggeunmo로 고정)
 const STICKER_FONTS = ["'NeoDunggeunmo'", "'Gaegu'", "'Nanum Pen Script'", "'Gowun Dodum'", "Arial", "cursive"];
 const colors = ["#ff0000", "#0000ff", "#008000", "#ff00ff", "#000000", "#ff6600"];
 const stickerImages = ["s01.png","s02.png","s03.png","s04.png","s05.png","s06.png","s07.png","s08.png","s09.png","s10.png"];
@@ -17,9 +16,11 @@ function formatDate(date) {
     return date.toISOString().split("T")[0];
 }
 
+// 데이터 저장 (사진 배열과 스티커 배열을 각각 저장)
 function saveData() {
     if (isRendering) return;
     const key = formatDate(currentDate);
+    
     const stickersData = Array.from(document.querySelectorAll(".sticker")).map(el => {
         const textarea = el.querySelector("textarea");
         return {
@@ -35,15 +36,16 @@ function saveData() {
         };
     });
     
-    const baseImg = document.querySelector("#baseImage");
-    const dataToSave = {
-        baseImage: baseImg ? baseImg.src : "",
-        stickers: stickersData,
-        imgX: baseImg ? parseInt(baseImg.style.left) : 0,
-        imgY: baseImg ? parseInt(baseImg.style.top) : 0,
-        imgRotation: baseImg ? baseImg.dataset.rotation : 0
-    };
-    localStorage.setItem(key, JSON.stringify(dataToSave));
+    const photosData = Array.from(document.querySelectorAll(".user-photo")).map(el => {
+        return {
+            src: el.src,
+            x: parseInt(el.style.left),
+            y: parseInt(el.style.top),
+            rotation: el.dataset.rotation
+        };
+    });
+
+    localStorage.setItem(key, JSON.stringify({ stickers: stickersData, photos: photosData }));
 }
 
 function loadData() {
@@ -52,15 +54,34 @@ function loadData() {
     if (savedData) {
         renderData(JSON.parse(savedData));
     } else {
-        renderData({ baseImage: "", stickers: [] });
+        renderData({ stickers: [], photos: [] });
     }
 }
 
+// 사진 추가 함수
+function addPhoto(src, x = null, y = null, rotation = null) {
+    const img = document.createElement("img");
+    img.className = "user-photo";
+    img.src = src;
+    
+    const posX = x !== null ? x : Math.random() * (window.innerWidth - 300);
+    const posY = y !== null ? y : Math.random() * (window.innerHeight - 300);
+    const rot = rotation !== null ? rotation : Math.random() * 30 - 15;
+
+    img.style.left = posX + "px";
+    img.style.top = posY + "px";
+    img.style.transform = `rotate(${rot}deg)`;
+    img.dataset.rotation = rot;
+
+    makeDraggable(img);
+    canvas.appendChild(img);
+}
+
+// 스티커 추가 함수
 function addSticker(text = "", x = null, y = null, width = null, rotation = null, font = null, color = null, locked = false, savedImg = null) {
     const sticker = document.createElement("div");
     sticker.className = "sticker";
     
-    // 크기 랜덤 제한: 100px ~ 130px
     const randomWidth = width || Math.floor(Math.random() * 31) + 100;
     sticker.style.width = randomWidth + "px";
 
@@ -70,8 +91,6 @@ function addSticker(text = "", x = null, y = null, width = null, rotation = null
     const textarea = document.createElement("textarea");
     textarea.className = "sticker-text";
     textarea.value = text;
-    
-    // 🔥 스티커 폰트만 랜덤하게 적용
     textarea.style.fontFamily = font || STICKER_FONTS[Math.floor(Math.random() * STICKER_FONTS.length)];
     textarea.style.color = color || colors[Math.floor(Math.random() * colors.length)];
     
@@ -86,7 +105,6 @@ function addSticker(text = "", x = null, y = null, width = null, rotation = null
     sticker.style.left = (x !== null ? x : Math.random() * (window.innerWidth - 150)) + "px";
     sticker.style.top = (y !== null ? y : Math.random() * (window.innerHeight - 150)) + "px";
     
-    // 각도 제한: -20 ~ 20도
     const finalRotation = rotation !== null ? rotation : Math.random() * 40 - 20;
     sticker.style.transform = `rotate(${finalRotation}deg)`;
     sticker.dataset.rotation = finalRotation;
@@ -103,13 +121,13 @@ function addSticker(text = "", x = null, y = null, width = null, rotation = null
     });
 }
 
-function makeDraggable(el, textarea) {
+function makeDraggable(el, textarea = null) {
     let offsetX, offsetY;
     let isDragging = false;
     el.addEventListener("mousedown", (e) => {
-        if (e.target === textarea && !textarea.readOnly) return;
+        if (textarea && e.target === textarea && !textarea.readOnly) return;
         isDragging = true;
-        el.style.zIndex = 1000;
+        el.style.zIndex = 100;
         const rect = el.getBoundingClientRect();
         offsetX = e.clientX - rect.left;
         offsetY = e.clientY - rect.top;
@@ -133,21 +151,8 @@ function makeDraggable(el, textarea) {
 function renderData(data) {
     isRendering = true;
     canvas.innerHTML = "";
-    if (data.baseImage) {
-        const img = document.createElement("img");
-        img.id = "baseImage";
-        img.src = data.baseImage;
-        img.style.position = "absolute";
-        
-        const posX = data.imgX !== undefined ? data.imgX : Math.random() * (window.innerWidth - 350);
-        const posY = data.imgY !== undefined ? data.imgY : Math.random() * (window.innerHeight - 350);
-        const rot = data.imgRotation !== undefined ? data.imgRotation : Math.random() * 30 - 15;
-        
-        img.style.left = posX + "px";
-        img.style.top = posY + "px";
-        img.style.transform = `rotate(${rot}deg)`;
-        img.dataset.rotation = rot;
-        canvas.appendChild(img);
+    if (data.photos) {
+        data.photos.forEach(p => addPhoto(p.src, p.x, p.y, p.rotation));
     }
     if (data.stickers) {
         data.stickers.forEach(s => addSticker(s.text, s.x, s.y, s.width, s.rotation, s.font, s.color, s.locked, s.imgSrc));
@@ -155,10 +160,9 @@ function renderData(data) {
     isRendering = false;
 }
 
-// 바탕화면 더블클릭 초기화 이스터에그
 canvas.addEventListener("dblclick", (e) => {
-    if (e.target === canvas || e.target.id === "baseImage") {
-        if (confirm("초기화하시겠습니까? (이 날의 기록이 모두 삭제됩니다)")) {
+    if (e.target === canvas) {
+        if (confirm("초기화하시겠습니까?")) {
             const key = formatDate(currentDate);
             localStorage.removeItem(key);
             loadData();
@@ -181,23 +185,17 @@ nextBtn.addEventListener("click", () => {
 addStickerBtn.addEventListener("click", () => addSticker());
 
 upload.addEventListener("change", (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-        const key = formatDate(currentDate);
-        const savedData = JSON.parse(localStorage.getItem(key) || '{"stickers":[]}');
-        const newData = {
-            baseImage: reader.result,
-            stickers: savedData.stickers,
-            imgX: Math.random() * (window.innerWidth - 350),
-            imgY: Math.random() * (window.innerHeight - 350),
-            imgRotation: Math.random() * 30 - 15
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+
+    files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            addPhoto(reader.result);
+            saveData(); // 각 사진 추가 후 바로 저장
         };
-        localStorage.setItem(key, JSON.stringify(newData));
-        loadData();
-    };
-    reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
+    });
 });
 
 dateEl.innerText = formatDate(currentDate);
