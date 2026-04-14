@@ -17,7 +17,7 @@ body {
 /* 상단 헤더 (날짜 및 이전/다음 버튼) */
 .header {
   position: fixed;
-  top: 20px;
+  top: 100px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
