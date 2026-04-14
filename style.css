@@ -1,36 +1,41 @@
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+/* 픽셀 폰트 (Neo둥근모) 로드 */
+@import url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/NeoDunggeunmo.woff');
 
 body {
   margin: 0;
   height: 100vh;
-  font-family: 'Gowun Dodum', sans-serif;
-  background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("./bg.png");
+  /* 🔥 전체 폰트를 픽셀 폰트로 강제 고정 */
+  font-family: 'NeoDunggeunmo', sans-serif !important;
+  
+  background-color: #008080; /* 윈도우 고전 배경색 (청록색) */
+  background-image: url("./background.png");
   background-size: cover;
   background-position: center;
   overflow: hidden;
 }
 
+/* 상단 날짜바: 윈도우 활성창 느낌 */
 .header {
   position: fixed;
-  top: 60px; 
+  top: 80px; /* 요청대로 조금 더 내림 */
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
   z-index: 10;
-  background: #eee;
-  padding: 8px 20px;
-  border: 3px outset #fff;
-  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+  
+  background: #000080; /* 윈도우 블루 */
+  padding: 4px 10px;
+  border: 2px solid #dfdfdf;
+  box-shadow: 2px 2px 0px #000;
 }
 
 h1, #date {
   margin: 0;
-  font-size: 24px;
-  color: #000080;
-  font-family: 'Gowun Dodum', sans-serif !important;
-  font-weight: bold;
+  font-size: 16px; 
+  color: #fff;
+  letter-spacing: 1px;
 }
 
 #canvas {
@@ -40,25 +45,27 @@ h1, #date {
   overflow: hidden;
 }
 
+/* 버디버디/고전 윈도우 버튼 */
 .btn {
-  padding: 8px 16px;
+  padding: 6px 12px;
   background: #c0c0c0;
   border-top: 2px solid #fff;
   border-left: 2px solid #fff;
-  border-bottom: 2px solid #808080;
-  border-right: 2px solid #808080;
+  border-bottom: 2px solid #000;
+  border-right: 2px solid #000;
   cursor: pointer;
+  font-family: 'NeoDunggeunmo', sans-serif !important;
   font-size: 14px;
-  font-family: 'Gowun Dodum', sans-serif !important;
-  color: black;
-  box-shadow: 1px 1px 0px #000;
+  color: #000;
+  outline: none;
 }
 
 .btn:active {
-  border-top: 2px solid #808080;
-  border-left: 2px solid #808080;
+  border-top: 2px solid #000;
+  border-left: 2px solid #000;
   border-bottom: 2px solid #fff;
   border-right: 2px solid #fff;
+  padding: 7px 11px 5px 13px;
 }
 
 .controls {
@@ -67,19 +74,18 @@ h1, #date {
   bottom: 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   z-index: 10;
-  background: rgba(192, 192, 192, 0.8);
-  padding: 15px;
-  border: 2px ridge #fff;
+  background: #c0c0c0;
+  padding: 6px;
+  border: 2px solid #000;
+  box-shadow: 2px 2px 0px #fff inset;
 }
 
+/* 스티커: 선 없고 깔끔하게 이미지+텍스트만 */
 .sticker {
   position: absolute;
   cursor: move;
-  background: transparent;
-  border: none;
-  box-shadow: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -89,43 +95,33 @@ h1, #date {
   width: 100%;
   display: block;
   pointer-events: none;
+  image-rendering: pixelated; /* 이미지도 픽셀 느낌 강조 */
 }
 
+/* 스티커 텍스트: 정중앙 픽셀 폰트 */
 .sticker-text {
   position: absolute;
-  /* 🔥 정중앙 배치를 위해 50% 설정 후 미세 조정 */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  
-  /* 🔥 텍스트가 중앙보다 위로 쏠려 보인다면 padding-top으로 미세 조정 가능 */
-  padding-top: 2px; 
-  
   width: 85%;
   text-align: center;
   border: none;
   background: transparent;
   outline: none;
   resize: none;
-
-  /* 🔥 폰트 크기 살짝 축소 (기존 18px -> 14px) */
-  font-size: 14px; 
-  font-weight: bold;
-  cursor: text;
-  z-index: 2;
   
-  /* 글자가 잘 보이도록 테두리 효과 */
-  text-shadow: 1.5px 1.5px 0px white, -1.5px -1.5px 0px white, 1.5px -1.5px 0px white, -1.5px 1.5px 0px white;
-  overflow: hidden;
+  font-family: 'NeoDunggeunmo', sans-serif !important;
+  font-size: 12px; /* 픽셀 폰트는 작아야 제맛 */
+  font-weight: normal;
   line-height: 1.2;
-}
-
-.sticker-text[readonly] {
-  cursor: default;
+  
+  z-index: 2;
+  /* 글자 테두리: 픽셀 느낌나게 1px로 얇게 */
+  text-shadow: 1px 1px 0px #fff, -1px -1px 0px #fff, 1px -1px 0px #fff, -1px 1px 0px #fff;
 }
 
 #baseImage {
-  border: 8px solid white;
-  outline: 1px solid #ccc;
-  box-shadow: 10px 10px 20px rgba(0,0,0,0.3);
+  border: 4px solid #fff;
+  outline: 2px solid #000;
 }
