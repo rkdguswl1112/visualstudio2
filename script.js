@@ -3,9 +3,10 @@ const upload = document.getElementById("upload");
 const dateEl = document.getElementById("date");
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
+// HTML에서 버튼 텍스트가 "코멘트 담기"여도 JS에서 제어할 변수명은 유지하거나 맞춰야 합니다.
 const addStickerBtn = document.getElementById("addStickerBtn");
 
-// 🔥 설정값: 폰트를 'Gowun Dodum'으로 고정
+// 🔥 설정값: 폰트를 'Gowun Dodum'으로 완전히 고정
 const FIXED_FONT = "'Gowun Dodum', sans-serif";
 const colors = ["#000000", "#ff5c5c", "#ffb84d", "#4d94ff", "#66cc99", "#cc66ff", "#ff66a3"];
 const stickerImages = ["s01.png","s02.png","s03.png","s04.png","s05.png","s06.png","s07.png","s08.png","s09.png","s10.png"];
@@ -17,7 +18,7 @@ function formatDate(date) {
   return date.toISOString().split("T")[0];
 }
 
-// 🔥 로컬 저장소에 데이터 저장 (서버 POST 대체)
+// 🔥 로컬 저장소에 데이터 저장 (GitHub Pages 전용)
 function saveData() {
   if (isRendering) return;
 
@@ -46,7 +47,7 @@ function saveData() {
   localStorage.setItem(key, JSON.stringify(dataToSave));
 }
 
-// 🔥 데이터 불러오기 (서버 GET 대체)
+// 🔥 데이터 불러오기
 function loadData() {
   const key = formatDate(currentDate);
   const savedData = localStorage.getItem(key);
@@ -58,7 +59,7 @@ function loadData() {
   }
 }
 
-// 🔥 스티커 생성 (폰트 고정 적용)
+// 🔥 스티커 생성 (폰트 'Gowun Dodum' 고정)
 function addSticker(text = "", x = null, y = null, color = null, locked = false, savedImg = null) {
   const sticker = document.createElement("div");
   sticker.className = "sticker";
@@ -70,7 +71,7 @@ function addSticker(text = "", x = null, y = null, color = null, locked = false,
   textarea.className = "sticker-text";
   textarea.value = text;
   
-  // 폰트 및 스타일 설정
+  // 모든 텍스트 영역에 동일 폰트 적용
   textarea.style.fontFamily = FIXED_FONT;
   textarea.style.color = color || colors[Math.floor(Math.random() * colors.length)];
 
@@ -168,9 +169,10 @@ nextBtn.addEventListener("click", () => {
   loadData();
 });
 
+// "코멘트 담기" 버튼 클릭 시 실행
 addStickerBtn.addEventListener("click", () => addSticker());
 
-// 🔥 배경 업로드 실행 로직 (정상 작동 수정)
+// 🔥 사진 업로드 실행 로직
 upload.addEventListener("change", (e) => {
   const file = e.target.files[0];
   if (!file) return;
@@ -178,7 +180,6 @@ upload.addEventListener("change", (e) => {
   const reader = new FileReader();
   reader.onload = () => {
     const key = formatDate(currentDate);
-    // 현재 날짜의 기존 데이터(스티커 등) 유지하며 이미지만 업데이트
     const savedData = JSON.parse(localStorage.getItem(key) || '{"stickers":[]}');
     
     const newData = {
@@ -194,6 +195,7 @@ upload.addEventListener("change", (e) => {
   reader.readAsDataURL(file);
 });
 
-// 초기 실행
+// 초기 실행 및 폰트 적용
 dateEl.innerText = formatDate(currentDate);
+dateEl.style.fontFamily = FIXED_FONT;
 loadData();
