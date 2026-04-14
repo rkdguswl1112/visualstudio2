@@ -1,18 +1,14 @@
-/* 픽셀 폰트 (Neo둥근모) 로드 */
 @import url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/NeoDunggeunmo.woff');
-
-/* 스티커용 랜덤 폰트들 로드 */
 @import url('https://fonts.googleapis.com/css2?family=Gaegu&family=Nanum+Pen+Script&family=Gowun+Dodum&display=swap');
 
 body {
     margin: 0;
     height: 100vh;
-    /* 시스템 기본은 픽셀 폰트 */
     font-family: 'NeoDunggeunmo', sans-serif !important;
-    background-color: #008080; /* 고전 윈도우 청록색 */
-    background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-    background-size: 20px 20px;
+    /* 🔥 이전의 선호하시던 배경 스타일로 복구 */
+    background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("./background.png");
+    background-size: cover;
+    background-position: center;
     overflow: hidden;
 }
 
@@ -24,8 +20,8 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    z-index: 100;
-    background: #000080; /* 윈도우 블루 상단바 */
+    z-index: 1000;
+    background: #000080;
     padding: 6px 15px;
     border: 2px solid #dfdfdf;
     box-shadow: 3px 3px 0px #000;
@@ -73,11 +69,23 @@ h1, #date {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    z-index: 100;
+    z-index: 1000;
     background: #c0c0c0;
     padding: 8px;
     border: 2px solid #000;
     box-shadow: 2px 2px 0px #fff inset;
+}
+
+/* 사진(업로드 이미지) 스타일 */
+.user-photo {
+    position: absolute;
+    max-width: 300px; /* 사진 크기 제한 */
+    height: auto;
+    border: 6px solid #fff;
+    outline: 2px solid #000;
+    box-shadow: 8px 8px 0px rgba(0,0,0,0.2);
+    cursor: move;
+    z-index: 5;
 }
 
 .sticker {
@@ -113,14 +121,4 @@ h1, #date {
     text-shadow: 1.5px 1.5px 0px white, -1.5px -1.5px 0px white, 1.5px -1.5px 0px white, -1.5px 1.5px 0px white;
     overflow: hidden;
     line-height: 1.2;
-}
-
-#baseImage {
-    position: absolute;
-    max-width: 350px;
-    height: auto;
-    border: 6px solid #fff;
-    outline: 2px solid #000;
-    box-shadow: 8px 8px 0px rgba(0,0,0,0.2);
-    z-index: 1;
 }
