@@ -1,40 +1,44 @@
-/* 전체 레이아웃 설정 */
+/* 폰트 로드: 픽셀 느낌을 주기 위해 추가 */
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
 body {
   margin: 0;
   height: 100vh;
-  /* 기본 폰트를 고운 돋움으로 설정 */
   font-family: 'Gowun Dodum', sans-serif;
-
-  /* 배경 이미지 설정 (GitHub Pages 경로 대응) */
-  background-image: url("./background.png");
+  
+  /* 2000년대 감성 배경: 격자무늬 패턴을 살짝 섞음 */
+  background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("./background.png");
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-
+  
   overflow: hidden;
+  image-rendering: pixelated; /* 이미지 픽셀 느낌 강조 */
 }
 
-/* 상단 헤더 (날짜 및 이전/다음 버튼) */
+/* 상단 날짜 영역: 당시 유행하던 투박한 바 스타일 */
 .header {
   position: fixed;
-  top: 80px;
+  top: 60px; /* 요청하신 대로 조금 더 내림 */
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
   z-index: 10;
+  background: #eee;
+  padding: 8px 20px;
+  border: 3px outset #fff; /* 입체적인 테두리 */
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
 }
 
-/* 제목 및 날짜 폰트 고정 */
 h1, #date {
   margin: 0;
-  font-size: 32px;
-  color: #222;
+  font-size: 24px;
+  color: #000080; /* 윈도우 클래식 블루 */
   font-family: 'Gowun Dodum', sans-serif !important;
+  font-weight: bold;
 }
 
-/* 스티커들이 놓일 전체 캔버스 */
 #canvas {
   width: 100vw;
   height: 100vh;
@@ -42,39 +46,50 @@ h1, #date {
   overflow: hidden;
 }
 
-/* 공통 버튼 스타일 */
+/* Y2K 버튼 스타일: 눌리는 느낌이 확실한 입체 버튼 */
 .btn {
-  padding: 10px 15px;
-  border: 1px solid #aaa;
-  background: rgba(255, 255, 255, 0.85);
+  padding: 8px 16px;
+  background: #c0c0c0; /* 클래식 윈도우 그레이 */
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #808080;
+  border-right: 2px solid #808080;
   cursor: pointer;
   font-size: 14px;
-  border-radius: 5px;
-  backdrop-filter: blur(5px);
-  /* 버튼 폰트 고정 */
   font-family: 'Gowun Dodum', sans-serif !important;
-  transition: background 0.2s;
+  color: black;
+  box-shadow: 1px 1px 0px #000;
 }
 
-.btn:hover {
-  background: rgba(240, 240, 240, 0.9);
+.btn:active {
+  border-top: 2px solid #808080;
+  border-left: 2px solid #808080;
+  border-bottom: 2px solid #fff;
+  border-right: 2px solid #fff;
+  padding: 9px 15px 7px 17px; /* 버튼 눌리는 효과 */
 }
 
-/* 하단 우측 컨트롤 영역 */
 .controls {
   position: fixed;
   right: 20px;
   bottom: 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   z-index: 10;
+  background: rgba(192, 192, 192, 0.8);
+  padding: 15px;
+  border: 2px ridge #fff;
 }
 
-/* 스티커 개별 박스 */
+/* 스티커 스타일: 사진 테두리에 흰색 프레임 추가 */
 .sticker {
   position: absolute;
-  width: 140px;
+  width: 150px;
+  padding: 10px;
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
   cursor: move;
 }
 
@@ -82,36 +97,31 @@ h1, #date {
   width: 100%;
   display: block;
   pointer-events: none;
+  border: 1px solid #eee;
 }
 
-/* 스티커 내부 텍스트 영역 (랜덤 폰트 적용을 위해 font-family 고정 해제) */
+/* 스티커 텍스트: 예전 스티커 사진 꾸미기 글씨 느낌 */
 .sticker-text {
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%;
+  width: 85%;
   text-align: center;
-
   border: none;
   background: transparent;
   outline: none;
   resize: none;
-
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: bold;
   cursor: text;
   z-index: 2;
-  overflow: hidden;
-  
-  /* 주의: 여기서 font-family를 !important로 고정하면 JS의 랜덤 폰트가 무시됩니다. */
+  text-shadow: 1px 1px 0px white, -1px -1px 0px white, 1px -1px 0px white, -1px 1px 0px white; /* 글씨 테두리 효과 */
 }
 
-.sticker-text[readonly] {
-  cursor: default;
-}
-
-/* 업로드된 배경 이미지 스타일 */
+/* 업로드된 배경 이미지(사진)에 액자 느낌 추가 */
 #baseImage {
-  pointer-events: none;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  border: 10px solid white;
+  outline: 1px solid #ccc;
+  box-shadow: 10px 10px 20px rgba(0,0,0,0.4);
 }
