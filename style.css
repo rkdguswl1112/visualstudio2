@@ -46,7 +46,6 @@ body {
 .notice-container { padding: 120px 50px 50px; background: rgba(255, 255, 255, 0.85); height: 100vh; box-sizing: border-box; }
 .timer-display { background: #c0c0c0; border: 3px solid #000; border-top-color: #dfdfdf; border-left-color: #dfdfdf; padding: 20px 40px; text-align: center; margin: 0 auto 40px; width: fit-content; box-shadow: 4px 4px 0px rgba(0,0,0,0.2); }
 .timer-digits { font-size: 45px; font-family: monospace; font-weight: bold; letter-spacing: 2px; }
-.pixel-list { line-height: 2.5; list-style: "💾 "; }
 
 /* 달력 보관함 */
 .archive-container { padding: 100px 50px 50px; background: rgba(255, 255, 255, 0.9); height: 100%; box-sizing: border-box; overflow-y: auto; }
