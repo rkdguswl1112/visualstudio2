@@ -20,8 +20,8 @@ function openTab(evt, tabName) {
     if(tabName === 'tab3') updateArchive();
 }
 
-// 시한폭탄 타이머
-function startBombTimer() {
+// 타이머 (24시간 카운트다운)
+function startTodayTimer() {
     setInterval(() => {
         const now = new Date();
         const midnight = new Date();
@@ -31,24 +31,24 @@ function startBombTimer() {
         const m = String(Math.floor((diff / 60000) % 60)).padStart(2, '0');
         const s = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
         const ms = String(Math.floor((diff % 1000) / 10)).padStart(2, '0');
-        const timer = document.getElementById("bombTimer");
+        const timer = document.getElementById("todayTimer");
         if(timer) timer.innerText = `${h}:${m}:${s}:${ms}`;
     }, 41);
 }
 
-// 데이터 저장/로드
 function formatDate(date) { return date.toISOString().split("T")[0]; }
 
+// 과거 날짜인지 체크 (수정 방지용)
 function isPastDate(date) {
     const today = new Date();
     today.setHours(0,0,0,0);
     const target = new Date(date);
     target.setHours(0,0,0,0);
-    return target < today; // 오늘보다 이전 날짜면 true
+    return target < today;
 }
 
 function saveData() {
-    if (isRendering || isPastDate(currentDate)) return; // 과거면 저장 안함
+    if (isRendering || isPastDate(currentDate)) return;
     const key = formatDate(currentDate);
     const stickers = Array.from(document.querySelectorAll(".sticker")).map(el => {
         const t = el.querySelector("textarea");
@@ -75,8 +75,8 @@ function renderData(data) {
 function addPhoto(src, x=null, y=null, rot=null, readOnly=false) {
     const img = document.createElement("img");
     img.className = "user-photo"; img.src = src;
-    img.style.left = (x || Math.random() * (innerWidth - 250)) + "px";
-    img.style.top = (y || Math.random() * (innerHeight - 250)) + "px";
+    img.style.left = (x || Math.random() * (window.innerWidth - 250)) + "px";
+    img.style.top = (y || Math.random() * (window.innerHeight - 250)) + "px";
     const r = rot || (Math.random() * 30 - 15);
     img.style.transform = `rotate(${r}deg)`; img.dataset.rotation = r;
     if(!readOnly) makeDraggable(img);
@@ -91,8 +91,8 @@ function addSticker(text="", x=null, y=null, w=null, rot=null, font=null, imgS=n
     t.style.fontFamily = font || STICKER_FONTS[Math.floor(Math.random()*11)];
     if(readOnly || text.trim() !== "") { t.readOnly = true; t.style.pointerEvents = "none"; }
     s.append(img, t);
-    s.style.left = (x || Math.random() * (innerWidth - 150)) + "px";
-    s.style.top = (y || Math.random() * (innerHeight - 150)) + "px";
+    s.style.left = (x || Math.random() * (window.innerWidth - 150)) + "px";
+    s.style.top = (y || Math.random() * (window.innerHeight - 150)) + "px";
     const r = rot || (Math.random() * 40 - 20);
     s.style.transform = `rotate(${r}deg)`; s.dataset.rotation = r;
     if(!readOnly) makeDraggable(s, t);
@@ -124,6 +124,13 @@ nextBtn.onclick = () => { currentDate.setDate(currentDate.getDate()+1); dateEl.i
 addStickerBtn.onclick = () => { if(!isPastDate(currentDate)) addSticker(); };
 upload.onchange = (e) => { if(!isPastDate(currentDate)) Array.from(e.target.files).forEach(f => { const r = new FileReader(); r.onload=()=>{addPhoto(r.result);saveData();}; r.readAsDataURL(f); }); };
 
-startBombTimer();
+// 초기화 (더블클릭)
+canvas.ondblclick = (e) => {
+    if(e.target === canvas && !isPastDate(currentDate)) {
+        if(confirm("기록을 초기화할까요?")) { localStorage.removeItem(formatDate(currentDate)); loadData(); }
+    }
+}
+
+startTodayTimer();
 dateEl.innerText = formatDate(currentDate);
 loadData();
