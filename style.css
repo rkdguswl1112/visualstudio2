@@ -3,7 +3,7 @@
 body {
     margin: 0; padding: 0; height: 100vh;
     font-family: 'NeoDunggeunmo', sans-serif !important;
-    background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("./bb.png");
+    background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("./b.png");
     background-size: cover; background-position: center; overflow: hidden;
 }
 
