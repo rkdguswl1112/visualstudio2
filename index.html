@@ -1,28 +1,27 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>시각스튜디오</title>
-  <link href="https://fonts.googleapis.com/css2?family=Gaegu&family=Nanum+Pen+Script&family=Gowun+Dodum&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Y2K 다이어리</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu&family=Nanum+Pen+Script&family=Gowun+Dodum&family=Gamja+Flower&family=Hi+Melody&family=Single+Day&family=East+Sea+Dokdo&family=Poor+Story&family=Black+Han+Sans&family=Dokdo&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="header">
+        <button class="btn" id="prevBtn">◀</button>
+        <h1 id="date">2026-04-15</h1>
+        <button class="btn" id="nextBtn">▶</button>
+    </div>
 
-  <div class="header">
-    <button class="btn" id="prevBtn">←</button>
-    <h1 id="date"></h1>
-    <button class="btn" id="nextBtn">→</button>
-  </div>
+    <div id="canvas"></div>
 
-  <div id="canvas"></div>
+    <div class="controls">
+        <input type="file" id="upload" accept="image/*" style="display: none;" multiple>
+        <button class="btn" onclick="document.getElementById('upload').click()">사진 추가</button>
+        <button class="btn" id="addStickerBtn">코멘트 담기</button>
+    </div>
 
-  <div class="controls">
-    <input type="file" id="upload" accept="image/*" hidden>
-    <label for="upload" class="btn">사진 업로드</label>
-    <button class="btn" id="addStickerBtn">코멘트 담기</button>
-  </div>
-
-  <script type="module" src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
