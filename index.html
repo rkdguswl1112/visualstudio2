@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Y2K 다이어리: 운명의 시간</title>
+    <title>Y2K 다이어리</title>
     <link href="https://fonts.googleapis.com/css2?family=Gaegu&family=Nanum+Pen+Script&family=Gowun+Dodum&family=Gamja+Flower&family=Hi+Melody&family=Single+Day&family=East+Sea+Dokdo&family=Poor+Story&family=Black+Han+Sans&family=Dokdo&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="tab-menu">
         <button class="tab-btn active" onclick="openTab(event, 'tab1')">1. 다이어리</button>
-        <button class="tab-btn" onclick="openTab(event, 'tab2')">2. 주의사항</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab2')">2. 이용수칙</button>
         <button class="tab-btn" onclick="openTab(event, 'tab3')">3. 보관함</button>
     </div>
 
@@ -29,18 +29,18 @@
     </div>
 
     <div id="tab2" class="tab-content">
-        <div class="notice-container bomb-theme">
-            <div class="bomb-display">
-                <div class="bomb-label">TIME UNTIL DATA FREEZE</div>
-                <div id="bombTimer" class="bomb-digits">00:00:00:00</div>
+        <div class="notice-container">
+            <div class="timer-display">
+                <div class="timer-label">오늘의 기록 마감까지</div>
+                <div id="todayTimer" class="timer-digits">00:00:00:00</div>
             </div>
             
-            <h2>🚨 기록 보존 수칙 (SECRET PROTOCOL)</h2>
+            <h2>📝 다이어리 이용 수칙</h2>
             <ul class="pixel-list">
-                <li><strong>시간의 불가역성:</strong> 지나간 날의 기록은 절대 수정할 수 없습니다.</li>
-                <li><strong>영구 동결:</strong> 자정이 지나 카운트가 0이 되는 순간, 데이터는 '읽기 전용'으로 박제됩니다.</li>
-                <li><strong>신중한 기록:</strong> 폭탄이 터지기 전, 당신의 진심을 담아 사진과 스티커를 배치하십시오.</li>
-                <li><strong>과거의 흔적:</strong> 수정할 수 없는 오타와 배치가 당신의 진짜 역사입니다.</li>
+                <li><strong>기록 동결 시스템:</strong> 본 다이어리는 당일 기록을 원칙으로 하며, 날짜가 지나면 수정이 불가능합니다.</li>
+                <li><strong>신중한 기록:</strong> 자정이 되면 오늘의 기록은 자동으로 '보관함'에 저장되며 읽기 전용으로 변경됩니다.</li>
+                <li><strong>자유로운 배치:</strong> 사진과 스티커는 마우스로 드래그하여 자유롭게 위치를 잡을 수 있습니다.</li>
+                <li><strong>초기화 안내:</strong> 다이어리 화면을 더블클릭하면 해당 날짜의 기록을 리셋할 수 있습니다.</li>
             </ul>
         </div>
     </div>
