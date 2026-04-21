@@ -3,7 +3,7 @@
 body {
     margin: 0; padding: 0; height: 100vh;
     font-family: 'NeoDunggeunmo', sans-serif !important;
-    background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("./background.png");
+    background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("./bg.png");
     background-size: cover; background-position: center; overflow: hidden;
 }
 
@@ -14,14 +14,27 @@ body {
 .tab-content { display: none; width: 100vw; height: 100vh; }
 .tab-content.active { display: block; }
 
-/* 다이어리 UI */
-.header { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 15px; z-index: 1000; background: #000080; padding: 8px 20px; border: 2px solid #dfdfdf; box-shadow: 4px 4px 0px #000; color: #fff; }
+/* 🔥 [수정] 상단 날짜 헤더 - 크기 고정 버전 */
+.header {
+    position: fixed; top: 70px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 1000; background: #000080; 
+    padding: 5px 10px; border: 2px solid #dfdfdf; box-shadow: 4px 4px 0px #000; 
+    width: 300px; /* 너비 고정 */
+    height: 40px; /* 높이 고정 */
+}
+
+.date-display { flex-grow: 1; text-align: center; }
+#date { margin: 0; font-size: 18px; color: #fff; letter-spacing: 1px; }
+
+.nav-btn { width: 35px; height: 30px; padding: 0 !important; display: flex; align-items: center; justify-content: center; }
+
 #canvas { width: 100vw; height: 100vh; position: relative; }
 .controls { position: fixed; right: 20px; bottom: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; background: #c0c0c0; padding: 10px; border: 2px solid #000; }
-/* 숨김 처리를 위한 클래스 */
 .hidden { display: none !important; }
 
 .btn { padding: 8px 15px; background: #c0c0c0; border: 2px solid #000; border-top-color: #fff; border-left-color: #fff; cursor: pointer; font-family: 'NeoDunggeunmo'; }
+.btn:active { border: 2px solid #000; border-bottom-color: #fff; border-right-color: #fff; box-shadow: inset 1px 1px 0px #000; }
 
 /* 사진 & 스티커 */
 .user-photo { position: absolute; max-width: 250px; cursor: move; z-index: 5; }
