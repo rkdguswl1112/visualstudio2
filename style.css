@@ -4,7 +4,6 @@ body {
     margin: 0;
     height: 100vh;
     font-family: 'NeoDunggeunmo', sans-serif !important;
-    /* 🔥 선호하셨던 이전 배경 스타일 */
     background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("./background.png");
     background-size: cover;
     background-position: center;
@@ -73,13 +72,14 @@ h1, #date {
     border: 2px solid #000;
 }
 
+/* 🔥 사진 프레임 제거 완료 */
 .user-photo {
     position: absolute;
     max-width: 300px;
     height: auto;
-    border: 6px solid #fff;
-    outline: 2px solid #000;
-    box-shadow: 8px 8px 0px rgba(0,0,0,0.2);
+    border: none;       /* 테두리 삭제 */
+    outline: none;      /* 외곽선 삭제 */
+    box-shadow: none;   /* 그림자 삭제 */
     cursor: move;
     z-index: 5;
 }
@@ -111,7 +111,7 @@ h1, #date {
     background: transparent;
     outline: none;
     resize: none;
-    font-size: 14px; /* 조금 더 가독성 있게 조정 */
+    font-size: 14px;
     font-weight: bold;
     z-index: 2;
     text-shadow: 1.5px 1.5px 0px white, -1.5px -1.5px 0px white, 1.5px -1.5px 0px white, -1.5px 1.5px 0px white;
