@@ -18,6 +18,9 @@ body {
 .header { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 15px; z-index: 1000; background: #000080; padding: 8px 20px; border: 2px solid #dfdfdf; box-shadow: 4px 4px 0px #000; color: #fff; }
 #canvas { width: 100vw; height: 100vh; position: relative; }
 .controls { position: fixed; right: 20px; bottom: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; background: #c0c0c0; padding: 10px; border: 2px solid #000; }
+/* 숨김 처리를 위한 클래스 */
+.hidden { display: none !important; }
+
 .btn { padding: 8px 15px; background: #c0c0c0; border: 2px solid #000; border-top-color: #fff; border-left-color: #fff; cursor: pointer; font-family: 'NeoDunggeunmo'; }
 
 /* 사진 & 스티커 */
@@ -42,5 +45,4 @@ body {
 .calendar-day.empty { background: #dfdfdf; cursor: default; }
 .calendar-day.today { border: 2px solid #000080; background: #e6f7ff; }
 
-/* 핑크 스마일 스티커 */
 .has-record::after { content: "😊"; font-size: 24px; margin-top: 5px; color: #ff00ff; filter: drop-shadow(1px 1px 0px #000); }
