@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Y2K 다이어리</title>
+    <title>Y2K 다이어리: 운명의 시간</title>
     <link href="https://fonts.googleapis.com/css2?family=Gaegu&family=Nanum+Pen+Script&family=Gowun+Dodum&family=Gamja+Flower&family=Hi+Melody&family=Single+Day&family=East+Sea+Dokdo&family=Poor+Story&family=Black+Han+Sans&family=Dokdo&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -29,23 +29,27 @@
     </div>
 
     <div id="tab2" class="tab-content">
-        <div class="notice-container">
-            <h2>⚠️ 이용 주의사항</h2>
+        <div class="notice-container bomb-theme">
+            <div class="bomb-display">
+                <div class="bomb-label">TIME UNTIL DATA FREEZE</div>
+                <div id="bombTimer" class="bomb-digits">00:00:00:00</div>
+            </div>
+            
+            <h2>🚨 기록 보존 수칙 (SECRET PROTOCOL)</h2>
             <ul class="pixel-list">
-                <li>사진과 코멘트는 드래그해서 위치를 바꿀 수 있습니다.</li>
-                <li>바탕화면을 더블클릭하면 해당 날짜가 초기화됩니다.</li>
-                <li>브라우저 캐시를 삭제하면 기록이 사라질 수 있으니 주의하세요!</li>
-                <li>과도한 스티커 부착은 정신 건강에 좋습니다.</li>
+                <li><strong>시간의 불가역성:</strong> 지나간 날의 기록은 절대 수정할 수 없습니다.</li>
+                <li><strong>영구 동결:</strong> 자정이 지나 카운트가 0이 되는 순간, 데이터는 '읽기 전용'으로 박제됩니다.</li>
+                <li><strong>신중한 기록:</strong> 폭탄이 터지기 전, 당신의 진심을 담아 사진과 스티커를 배치하십시오.</li>
+                <li><strong>과거의 흔적:</strong> 수정할 수 없는 오타와 배치가 당신의 진짜 역사입니다.</li>
             </ul>
         </div>
     </div>
 
     <div id="tab3" class="tab-content">
         <div class="archive-container">
-            <h2>📦 보관함</h2>
-            <p>지금까지 기록한 날짜들을 확인하세요.</p>
-            <div id="archiveList" class="archive-list">
-                </div>
+            <h2>📦 데이터 보관함 (ARCHIVE)</h2>
+            <p>기록이 완료된 과거의 날짜들을 확인하세요.</p>
+            <div id="archiveList" class="archive-list"></div>
         </div>
     </div>
 
