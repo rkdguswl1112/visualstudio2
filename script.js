@@ -36,7 +36,6 @@ function startTodayTimer() {
 
 function formatDate(date) { return date.toISOString().split("T")[0]; }
 
-// 🔥 오늘이 아닌 과거/미래 날짜인지 체크
 function isNotToday(date) {
     const today = formatDate(new Date());
     const target = formatDate(date);
@@ -44,7 +43,6 @@ function isNotToday(date) {
 }
 
 function updateUIForDate() {
-    // 오늘이 아니면 편집 버튼들 숨기기
     if (isNotToday(currentDate)) {
         editControls.classList.add("hidden");
     } else {
@@ -66,7 +64,7 @@ function saveData() {
 function loadData() {
     const key = formatDate(currentDate);
     dateEl.innerText = key;
-    updateUIForDate(); // 날짜 바뀔 때마다 UI 업데이트
+    updateUIForDate();
     const data = JSON.parse(localStorage.getItem(key)) || { stickers: [], photos: [] };
     renderData(data);
 }
