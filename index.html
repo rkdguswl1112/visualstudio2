@@ -8,18 +8,45 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="header">
-        <button class="btn" id="prevBtn">◀</button>
-        <h1 id="date">2026-04-15</h1>
-        <button class="btn" id="nextBtn">▶</button>
+    <div class="tab-menu">
+        <button class="tab-btn active" onclick="openTab(event, 'tab1')">1. 다이어리</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab2')">2. 주의사항</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab3')">3. 보관함</button>
     </div>
 
-    <div id="canvas"></div>
+    <div id="tab1" class="tab-content active">
+        <div class="header">
+            <button class="btn" id="prevBtn">◀</button>
+            <h1 id="date">2026-04-15</h1>
+            <button class="btn" id="nextBtn">▶</button>
+        </div>
+        <div id="canvas"></div>
+        <div class="controls">
+            <input type="file" id="upload" accept="image/*" style="display: none;" multiple>
+            <button class="btn" onclick="document.getElementById('upload').click()">사진 추가</button>
+            <button class="btn" id="addStickerBtn">코멘트 담기</button>
+        </div>
+    </div>
 
-    <div class="controls">
-        <input type="file" id="upload" accept="image/*" style="display: none;" multiple>
-        <button class="btn" onclick="document.getElementById('upload').click()">사진 추가</button>
-        <button class="btn" id="addStickerBtn">코멘트 담기</button>
+    <div id="tab2" class="tab-content">
+        <div class="notice-container">
+            <h2>⚠️ 이용 주의사항</h2>
+            <ul class="pixel-list">
+                <li>사진과 코멘트는 드래그해서 위치를 바꿀 수 있습니다.</li>
+                <li>바탕화면을 더블클릭하면 해당 날짜가 초기화됩니다.</li>
+                <li>브라우저 캐시를 삭제하면 기록이 사라질 수 있으니 주의하세요!</li>
+                <li>과도한 스티커 부착은 정신 건강에 좋습니다.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="tab3" class="tab-content">
+        <div class="archive-container">
+            <h2>📦 보관함</h2>
+            <p>지금까지 기록한 날짜들을 확인하세요.</p>
+            <div id="archiveList" class="archive-list">
+                </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
