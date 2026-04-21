@@ -1,120 +1,69 @@
-@import url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/NeoDunggeunmo.woff');
-
 body {
-    margin: 0;
-    height: 100vh;
-    font-family: 'NeoDunggeunmo', sans-serif !important;
-    /* 🔥 선호하셨던 이전 배경 스타일 */
-    background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("./bg.png");
-    background-size: cover;
-    background-position: center;
-    overflow: hidden;
+  margin: 0;
+  height: 100vh;
+  font-family: sans-serif;
+  background: url("bg.png") center/cover no-repeat;
+  overflow: hidden;
 }
 
 .header {
-    position: fixed;
-    top: 60px; 
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    z-index: 1000;
-    background: #000080;
-    padding: 6px 15px;
-    border: 2px solid #dfdfdf;
-    box-shadow: 3px 3px 0px #000;
-}
-
-h1, #date {
-    margin: 0;
-    font-size: 16px; 
-    color: #fff;
-    letter-spacing: 1px;
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 1000;
 }
 
 #canvas {
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
-}
-
-.btn {
-    padding: 6px 12px;
-    background: #c0c0c0;
-    border-top: 2px solid #fff;
-    border-left: 2px solid #fff;
-    border-bottom: 2px solid #000;
-    border-right: 2px solid #000;
-    cursor: pointer;
-    font-family: 'NeoDunggeunmo', sans-serif !important;
-    font-size: 12px;
-    color: #000;
-}
-
-.btn:active {
-    border-top: 2px solid #000;
-    border-left: 2px solid #000;
-    border-bottom: 2px solid #fff;
-    border-right: 2px solid #fff;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
 }
 
 .controls {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    z-index: 1000;
-    background: #c0c0c0;
-    padding: 8px;
-    border: 2px solid #000;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
+/* 🔥 프레임 완전 제거 */
 .user-photo {
-    position: absolute;
-    max-width: 300px;
-    height: auto;
-    border: 6px solid #fff;
-    outline: 2px solid #000;
-    box-shadow: 8px 8px 0px rgba(0,0,0,0.2);
-    cursor: move;
-    z-index: 5;
+  position: absolute;
+  max-width: 300px;
+  height: auto;
+  cursor: move;
+  border: none;
+  outline: none;
+  box-shadow: none;
 }
 
+/* 스티커 */
 .sticker {
-    position: absolute;
-    cursor: move;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
+  position: absolute;
+  cursor: move;
 }
 
 .sticker img {
-    width: 100%;
-    display: block;
-    pointer-events: none;
-    image-rendering: pixelated;
+  width: 100%;
+  pointer-events: none;
 }
 
 .sticker-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    text-align: center;
-    border: none;
-    background: transparent;
-    outline: none;
-    resize: none;
-    font-size: 14px; /* 조금 더 가독성 있게 조정 */
-    font-weight: bold;
-    z-index: 2;
-    text-shadow: 1.5px 1.5px 0px white, -1.5px -1.5px 0px white, 1.5px -1.5px 0px white, -1.5px 1.5px 0px white;
-    overflow: hidden;
-    line-height: 1.2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  text-align: center;
+  border: none;
+  background: transparent;
+  outline: none;
+  resize: none;
+  font-size: 14px;
+  font-weight: bold;
 }
