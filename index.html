@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Y2K 다이어리</title>
+    <title>시각스튜디오</title>
     <link href="https://fonts.googleapis.com/css2?family=Gaegu&family=Nanum+Pen+Script&family=Gowun+Dodum&family=Gamja+Flower&family=Hi+Melody&family=Single+Day&family=East+Sea+Dokdo&family=Poor+Story&family=Black+Han+Sans&family=Dokdo&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -16,11 +16,14 @@
 
     <div id="tab1" class="tab-content active">
         <div class="header">
-            <button class="btn" id="prevBtn">◀</button>
-            <h1 id="date">2026-04-22</h1>
-            <button class="btn" id="nextBtn">▶</button>
+            <button class="btn nav-btn" id="prevBtn">◀</button>
+            <div class="date-display">
+                <h1 id="date">2026-04-22</h1>
+            </div>
+            <button class="btn nav-btn" id="nextBtn">▶</button>
         </div>
         <div id="canvas"></div>
+        
         <div class="controls" id="editControls">
             <input type="file" id="upload" accept="image/*" style="display: none;" multiple>
             <button class="btn" onclick="document.getElementById('upload').click()">사진 추가</button>
@@ -36,9 +39,9 @@
             </div>
             <h2>📝 다이어리 이용 수칙</h2>
             <ul class="pixel-list">
-                <li><strong>수정 불가:</strong> 오늘이 지난 기록은 열람만 가능하며, 추가 및 수정이 제한됩니다.</li>
-                <li><strong>인터페이스 변경:</strong> 과거 날짜 선택 시 하단 편집 메뉴가 자동으로 사라집니다.</li>
-                <li><strong>보관함 스티커:</strong> 기록을 남긴 날에는 달력에 😊 스티커가 붙어 소중히 보관됩니다.</li>
+                <li><strong>고정형 UI:</strong> 날짜가 바뀌어도 상단 바의 크기가 변하지 않도록 고정되었습니다.</li>
+                <li><strong>수정 불가:</strong> 오늘이 지난 기록은 열람만 가능하며 편집 기능이 비활성화됩니다.</li>
+                <li><strong>보관함 활용:</strong> 3번 탭의 달력에서 과거 기록을 한눈에 확인하세요.</li>
             </ul>
         </div>
     </div>
