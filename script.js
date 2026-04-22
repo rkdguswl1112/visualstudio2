@@ -7,7 +7,8 @@ const addStickerBtn = document.getElementById("addStickerBtn");
 const editControls = document.getElementById("editControls");
 
 const STICKER_FONTS = ["'Gaegu'", "'Nanum Pen Script'", "'Gowun Dodum'", "'Gamja Flower'", "'Hi Melody'", "'Single Day'", "'East Sea Dokdo'", "'Poor Story'", "'Black Han Sans'", "'Dokdo'", "'NeoDunggeunmo'"];
-const stickerImages = ["s01.png","s02.png","s03.png","s04.png","s05.png","s06.png","s07.png","s08.png","s09.png","s10.png"];
+const stickerImages = ["s01.png","s02.png","s03.png","s04.png","s05.png","s06.png","s07.png","s08.png","s09.png","s10.png"
+                      "s-11","s-12","s-13","s-14",'s-15","s-16","s-17","s-18","s-19","s-20","s-21","s-22","s-23","s-24","s-25"];
 let currentDate = new Date();
 let calendarDate = new Date();
 let isRendering = false;
