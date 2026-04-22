@@ -7,8 +7,12 @@ const addStickerBtn = document.getElementById("addStickerBtn");
 const editControls = document.getElementById("editControls");
 
 const STICKER_FONTS = ["'Gaegu'", "'Nanum Pen Script'", "'Gowun Dodum'", "'Gamja Flower'", "'Hi Melody'", "'Single Day'", "'East Sea Dokdo'", "'Poor Story'", "'Black Han Sans'", "'Dokdo'", "'NeoDunggeunmo'"];
-const stickerImages = ["s01.png","s02.png","s03.png","s04.png","s05.png","s06.png","s07.png","s08.png","s09.png","s10.png"
-                      "s-11","s-12","s-13","s-14",'s-15","s-16","s-17","s-18","s-19","s-20","s-21","s-22","s-23","s-24","s-25","s-26","s-27","s-28","s-29","s-30"];
+const stickerImages = [
+    "s01.png","s02.png","s03.png","s04.png","s05.png","s06.png","s07.png","s08.png","s09.png","s10.png",
+    "s-11.png","s-12.png","s-13.png","s-14.png","s-15.png","s-16.png","s-17.png","s-18.png","s-19.png","s-20.png",
+    "s-21.png","s-22.png","s-23.png","s-24.png","s-25.png","s-26.png","s-27.png","s-28.png","s-29.png","s-30.png"
+];
+
 let currentDate = new Date();
 let calendarDate = new Date();
 let isRendering = false;
@@ -88,9 +92,9 @@ function addPhoto(src, x=null, y=null, rot=null, ro=false) {
 function addSticker(text="", x=null, y=null, w=null, rot=null, font=null, imgS=null, ro=false) {
     const s = document.createElement("div"); s.className = "sticker";
     s.style.width = (w || 120)+"px";
-    const img = document.createElement("img"); img.src = imgS || stickerImages[Math.floor(Math.random()*10)];
+    const img = document.createElement("img"); img.src = imgS || stickerImages[Math.floor(Math.random()*stickerImages.length)];
     const t = document.createElement("textarea"); t.className = "sticker-text"; t.value = text;
-    t.style.fontFamily = font || STICKER_FONTS[0];
+    t.style.fontFamily = font || STICKER_FONTS[Math.floor(Math.random()*STICKER_FONTS.length)];
     if(ro || text!=="") { t.readOnly = true; t.style.pointerEvents = "none"; }
     s.append(img, t);
     s.style.left = (x || Math.random()*(innerWidth-150))+"px"; s.style.top = (y || Math.random()*(innerHeight-150))+"px";
