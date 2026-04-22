@@ -8,7 +8,7 @@ body {
 }
 
 /* 탭 메뉴 */
-.tab-menu { position: fixed; top: 20px; left: 20px; z-index: 2000; display: flex; gap: 5px; }
+.tab-menu { position: fixed; top: 18px; left: 20px; z-index: 2000; display: flex; gap: 5px; }
 .tab-btn { padding: 10px 20px; background: #c0c0c0; border: 2px solid #000; border-bottom: none; cursor: pointer; font-family: 'NeoDunggeunmo'; box-shadow: inset 2px 2px 0px #fff; }
 .tab-btn.active { background: #000080; color: white; box-shadow: inset -2px -2px 0px #000; }
 .tab-content { display: none; width: 100vw; height: 100vh; }
