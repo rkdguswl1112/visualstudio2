@@ -17,7 +17,7 @@ body {
     position: fixed; top: 85px; left: 50%; transform: translateX(-50%);
     display: flex; align-items: center; justify-content: space-between;
     z-index: 1000; background: #000080; 
-    padding: 5px 10px; border: 2px solid #dfdfdf; box-shadow: 4px 4px 0px #000; 
+    padding: 5px 10px; border: 2px solid #dfdfdf; 
     width: 300px; height: 40px;
 }
 .date-display { flex-grow: 1; text-align: center; }
