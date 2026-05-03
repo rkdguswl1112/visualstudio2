@@ -1,28 +1,18 @@
-\@import url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/NeoDunggeunmo.woff');
+@import url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/NeoDunggeunmo.woff');
 
 body {
     margin: 0; padding: 0; height: 100vh;
     font-family: 'NeoDunggeunmo', sans-serif !important;
     /* 배경 이미지 강제 적용 */
-    background-image: url("b.png") !important;
-    background-size: cover !important;
-    background-position: center !important;
-    background-attachment: fixed !important;
-    background-repeat: no-repeat !important;
-    background-color: #f0f0f0; 
+    background: url("b.png") no-repeat center center / cover fixed !important;
     overflow: hidden; color: #000;
 }
-
-/* 탭 컨텐츠가 배경을 가리지 않도록 투명화 */
-.tab-content { 
-    width: 100vw; height: 100vh; position: relative; display: none; 
-    background: transparent !important; 
-}
-.tab-content.active { display: block; }
 
 .tab-menu { position: fixed; top: 19px; left: 20px; z-index: 5000; display: flex; gap: 5px; }
 .tab-btn { padding: 10px 20px; background: #c0c0c0; border: 2px solid #000; border-bottom: none; cursor: pointer; font-family: 'NeoDunggeunmo'; box-shadow: inset 2px 2px 0px #fff; }
 .tab-btn.active { background: #000080; color: white; box-shadow: inset -2px -2px 0px #000; }
+.tab-content { width: 100vw; height: 100vh; position: relative; display: none; background: transparent !important; }
+.tab-content.active { display: block; }
 
 .header { 
     position: fixed; top: 85px; left: 50%; transform: translateX(-50%); 
@@ -53,7 +43,7 @@ body {
     outline: none; font-size: 14px; font-weight: bold; resize: none; overflow: hidden; 
 }
 
-.notice-container { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; overflow-y: auto; background: rgba(255, 255, 255, 0.3); }
+.notice-container { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; overflow-y: auto; background: rgba(255, 255, 255, 0.2); }
 .timer-display { background: #c0c0c0; border: 2px solid #000; padding: 25px 60px; margin-bottom: 50px; }
 .timer-digits { font-size: 56px; font-family: monospace; font-weight: 900; }
 .notice-title { font-size: 26px; background: #000; color: #fff; padding: 5px 20px; display: inline-block; margin-bottom: 40px; }
@@ -61,7 +51,7 @@ body {
 .pixel-list li { margin-bottom: 40px; line-height: 1.8; font-size: 15px; }
 .pixel-list strong { font-size: 20px; display: block; margin-bottom: 5px; }
 
-.archive-container { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.3); }
+.archive-container { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.2); }
 .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; background: #c0c0c0; border: 2px solid #000; padding: 10px; width: 600px; }
 .calendar-day { height: 60px; background: #fff; border: 1px solid #808080; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 .calendar-day.today { border: 2px solid #000080; background: #e6f7ff; }
