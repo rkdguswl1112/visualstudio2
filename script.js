@@ -9,9 +9,15 @@ const editControls = document.getElementById("editControls");
 const STICKER_FONTS = ["'Gaegu'", "'Nanum Pen Script'", "'Gowun Dodum'", "'Gamja Flower'", "'Hi Melody'", "'Single Day'", "'East Sea Dokdo'", "'Poor Story'", "'Black Han Sans'", "'Dokdo'"];
 const stickerImages = ["s01.png", "s02.png", "s03.png", "s04.png", "s05.png", "s06.png", "s07.png", "s08.png", "s09.png", "s10.png", "s-11.png", "s-14.png", "s-16.png", "s-17.png", "s-18.png", "s-19.png", "s-20.png", "s-24.png", "s-25.png", "s-26.png", "s-27.png", "s-28.png", "s-29.png"];
 
-const REAL_TODAY_STR = '2026-04-29';
-let currentDate = new Date(REAL_TODAY_STR);
-let calendarDate = new Date(REAL_TODAY_STR);
+// [수정] 고정된 날짜가 아닌, 실제 오늘 날짜를 가져오도록 변경
+function getTodayStr() {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+}
+
+const REAL_TODAY_STR = getTodayStr();
+let currentDate = new Date(); // 현재 보고 있는 페이지 날짜
+let calendarDate = new Date(); // 보관함 기준 날짜
 let isRendering = false;
 let topZIndex = 100;
 
@@ -54,21 +60,21 @@ function formatDate(date) {
 
 function saveData() {
     if (isRendering) return;
-    if (formatDate(currentDate) !== REAL_TODAY_STR) return;
-
     const key = formatDate(currentDate);
+    if (key !== REAL_TODAY_STR) return; // 오늘이 아니면 저장 불가
+
     const stickers = Array.from(document.querySelectorAll(".sticker")).map(el => {
         const t = el.querySelector("textarea");
         return { text: t.value, x: el.style.left, y: el.style.top, rotation: el.dataset.rotation, font: t.style.fontFamily, imgSrc: el.querySelector("img").getAttribute("src") };
     });
     const photos = Array.from(document.querySelectorAll(".user-photo")).map(el => ({ src: el.src, x: el.style.left, y: el.style.top, rotation: el.dataset.rotation }));
     
-    localStorage.setItem(`diary_data_${key}`, JSON.stringify({ stickers, photos }));
+    localStorage.setItem(`diary_storage_${key}`, JSON.stringify({ stickers, photos }));
 
-    let recorded = JSON.parse(localStorage.getItem("recorded_dates") || "[]");
+    let recorded = JSON.parse(localStorage.getItem("recorded_dates_list") || "[]");
     if (!recorded.includes(key)) {
         recorded.push(key);
-        localStorage.setItem("recorded_dates", JSON.stringify(recorded));
+        localStorage.setItem("recorded_dates_list", JSON.stringify(recorded));
     }
 }
 
@@ -76,8 +82,7 @@ function loadData() {
     const key = formatDate(currentDate);
     dateEl.innerText = key;
     updateUIVisibility();
-    
-    const saved = localStorage.getItem(`diary_data_${key}`);
+    const saved = localStorage.getItem(`diary_storage_${key}`);
     const data = saved ? JSON.parse(saved) : { stickers: [], photos: [] };
     renderData(data);
 }
@@ -86,7 +91,6 @@ function renderData(data) {
     isRendering = true; 
     canvas.innerHTML = "";
     const isToday = formatDate(currentDate) === REAL_TODAY_STR;
-
     if (data.photos) data.photos.forEach(p => addPhoto(p.src, p.x, p.y, p.rotation, isToday));
     if (data.stickers) data.stickers.forEach(s => addSticker(s.text, s.x, s.y, s.rotation, s.font, s.imgSrc, isToday));
     isRendering = false;
@@ -115,18 +119,13 @@ function addSticker(text="", x=null, y=null, rot=null, font=null, imgS=null, isE
     t.value = text;
     t.readOnly = !isEditable; 
     t.style.fontFamily = font || STICKER_FONTS[Math.floor(Math.random()*STICKER_FONTS.length)];
-    
     s.append(img, t);
     s.style.left = x || (Math.random()*(innerWidth-200))+"px"; 
     s.style.top = y || (Math.random()*(innerHeight-200))+"px";
     const r = rot || (Math.random()*40-20); 
     s.style.transform = `rotate(${r}deg)`; 
     s.dataset.rotation = r;
-    
-    if (isEditable) {
-        makeDraggable(s, t);
-        t.oninput = saveData;
-    }
+    if (isEditable) { makeDraggable(s, t); t.oninput = saveData; }
     canvas.appendChild(s);
 }
 
@@ -137,8 +136,7 @@ function makeDraggable(el, txt=null) {
         isDragging = true;
         el.style.zIndex = ++topZIndex;
         let rect = el.getBoundingClientRect();
-        sx = cx - rect.left;
-        sy = cy - rect.top;
+        sx = cx - rect.left; sy = cy - rect.top;
         const move = (me) => {
             if (!isDragging) return;
             const mx = me.clientX || (me.touches && me.touches[0].clientX);
@@ -159,8 +157,7 @@ function updateArchive() {
     grid.innerHTML = "";
     const y = calendarDate.getFullYear(), m = calendarDate.getMonth();
     title.innerText = `${y}년 ${m + 1}월`;
-    const recorded = JSON.parse(localStorage.getItem("recorded_dates") || "[]");
-
+    const recorded = JSON.parse(localStorage.getItem("recorded_dates_list") || "[]");
     const first = new Date(y, m, 1).getDay(), last = new Date(y, m + 1, 0).getDate();
     for (let i = 0; i < first; i++) grid.appendChild(Object.assign(document.createElement("div"), {className:"calendar-day empty"}));
     for (let d = 1; d <= last; d++) {
@@ -179,7 +176,7 @@ function changeMonth(offset) { calendarDate.setMonth(calendarDate.getMonth() + o
 prevBtn.onclick = () => { currentDate.setDate(currentDate.getDate()-1); loadData(); };
 nextBtn.onclick = () => { 
     let n = new Date(currentDate); n.setDate(n.getDate()+1); 
-    if(n <= new Date(REAL_TODAY_STR)) { currentDate = n; loadData(); }
+    if(n <= new Date()) { currentDate = n; loadData(); }
 };
 addStickerBtn.onclick = () => { addSticker(); saveData(); };
 upload.onchange = (e) => { 
