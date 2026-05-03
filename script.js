@@ -9,15 +9,14 @@ const editControls = document.getElementById("editControls");
 const STICKER_FONTS = ["'Gaegu'", "'Nanum Pen Script'", "'Gowun Dodum'", "'Gamja Flower'", "'Hi Melody'", "'Single Day'", "'East Sea Dokdo'", "'Poor Story'", "'Black Han Sans'", "'Dokdo'"];
 const stickerImages = ["s01.png", "s02.png", "s03.png", "s04.png", "s05.png", "s06.png", "s07.png", "s08.png", "s09.png", "s10.png", "s-11.png", "s-14.png", "s-16.png", "s-17.png", "s-18.png", "s-19.png", "s-20.png", "s-24.png", "s-25.png", "s-26.png", "s-27.png", "s-28.png", "s-29.png"];
 
-// [수정] 고정된 날짜가 아닌, 실제 오늘 날짜를 가져오도록 변경
 function getTodayStr() {
     const now = new Date();
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 }
 
 const REAL_TODAY_STR = getTodayStr();
-let currentDate = new Date(); // 현재 보고 있는 페이지 날짜
-let calendarDate = new Date(); // 보관함 기준 날짜
+let currentDate = new Date(); 
+let calendarDate = new Date(); 
 let isRendering = false;
 let topZIndex = 100;
 
@@ -61,7 +60,7 @@ function formatDate(date) {
 function saveData() {
     if (isRendering) return;
     const key = formatDate(currentDate);
-    if (key !== REAL_TODAY_STR) return; // 오늘이 아니면 저장 불가
+    if (key !== REAL_TODAY_STR) return; 
 
     const stickers = Array.from(document.querySelectorAll(".sticker")).map(el => {
         const t = el.querySelector("textarea");
@@ -173,11 +172,11 @@ function updateArchive() {
 }
 
 function changeMonth(offset) { calendarDate.setMonth(calendarDate.getMonth() + offset); updateArchive(); }
+
+// [수정] 제한 없이 앞뒤로 무한 이동 가능
 prevBtn.onclick = () => { currentDate.setDate(currentDate.getDate()-1); loadData(); };
-nextBtn.onclick = () => { 
-    let n = new Date(currentDate); n.setDate(n.getDate()+1); 
-    if(n <= new Date()) { currentDate = n; loadData(); }
-};
+nextBtn.onclick = () => { currentDate.setDate(currentDate.getDate()+1); loadData(); };
+
 addStickerBtn.onclick = () => { addSticker(); saveData(); };
 upload.onchange = (e) => { 
     Array.from(e.target.files).forEach(f => { 
