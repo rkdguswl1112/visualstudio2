@@ -3,141 +3,52 @@
 body {
     margin: 0; padding: 0; height: 100vh;
     font-family: 'NeoDunggeunmo', sans-serif !important;
-    background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("./b.png");
-    background-size: cover; background-position: center; overflow: hidden;
-}
-
-.tab-menu { position: fixed; top: 19px; left: 20px; z-index: 2000; display: flex; gap: 5px; }
-.tab-btn { padding: 10px 20px; background: #c0c0c0; border: 2px solid #000; border-bottom: none; cursor: pointer; font-family: 'NeoDunggeunmo'; box-shadow: inset 2px 2px 0px #fff; }
-.tab-btn.active { background: #000080; color: white; box-shadow: inset -2px -2px 0px #000; }
-.tab-content { display: none; width: 100vw; height: 100vh; }
-.tab-content.active { display: block; }
-
-.header {
-    position: fixed; top: 85px; left: 50%; transform: translateX(-50%);@import url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/NeoDunggeunmo.woff');
-
-body {
-    margin: 0; padding: 0; height: 100vh;
-    font-family: 'NeoDunggeunmo', sans-serif !important;
     background: #f0f0f0; overflow: hidden; color: #000;
 }
 
-/* 탭 메뉴 */
-.tab-menu { 
-    position: fixed; top: 19px; left: 20px; z-index: 5000; display: flex; gap: 5px; 
-}
-.tab-btn { 
-    padding: 10px 20px; background: #c0c0c0; border: 2px solid #000; border-bottom: none; 
-    cursor: pointer; font-family: 'NeoDunggeunmo'; box-shadow: inset 2px 2px 0px #fff; 
-}
+.tab-menu { position: fixed; top: 19px; left: 20px; z-index: 5000; display: flex; gap: 5px; }
+.tab-btn { padding: 10px 20px; background: #c0c0c0; border: 2px solid #000; border-bottom: none; cursor: pointer; font-family: 'NeoDunggeunmo'; box-shadow: inset 2px 2px 0px #fff; }
 .tab-btn.active { background: #000080; color: white; box-shadow: inset -2px -2px 0px #000; }
 .tab-content { width: 100vw; height: 100vh; position: relative; display: none; }
+.tab-content.active { display: block; }
 
-/* 다이어리 상단 헤더 */
-.header { 
-    position: fixed; top: 85px; left: 50%; transform: translateX(-50%); 
-    display: flex; align-items: center; justify-content: space-between; 
-    z-index: 2500; background: #000080; padding: 5px 10px; border: 2px solid #dfdfdf; 
+.header {
+    position: fixed; top: 85px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 2500; background: #000080; padding: 5px 10px; border: 2px solid #dfdfdf;
     width: 320px; height: 40px; color: #fff;
 }
 .header h1 { font-size: 18px; margin: 0; }
-.nav-btn { background: transparent; border: 1px solid #fff; color: #fff; cursor: pointer; }
+.nav-btn { background: transparent; border: 1px solid #fff; color: #fff; cursor: pointer; width: 30px; }
 
-/* 컨트롤러 */
-.controls { 
-    position: fixed; right: 20px; bottom: 20px; display: flex; flex-direction: column; 
-    gap: 10px; z-index: 2800; background: #c0c0c0; padding: 10px; border: 2px solid #000; 
+.controls {
+    position: fixed; right: 20px; bottom: 20px; display: flex; flex-direction: column;
+    gap: 10px; z-index: 2800; background: #c0c0c0; padding: 10px; border: 2px solid #000;
 }
-.btn { 
-    padding: 8px 15px; background: #c0c0c0; border: 2px solid #000; 
-    border-top-color: #fff; border-left-color: #fff; cursor: pointer; 
-    font-family: 'NeoDunggeunmo'; text-align: center; font-size: 14px;
+.btn {
+    padding: 8px 15px; background: #c0c0c0; border: 2px solid #000;
+    border-top-color: #fff; border-left-color: #fff; cursor: pointer;
+    font-family: 'NeoDunggeunmo'; font-size: 14px;
 }
 
-/* 캔버스 요소 */
 #canvas { width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 1; }
 .user-photo { position: absolute; max-width: 250px; cursor: move; }
 .sticker { position: absolute; width: 150px; cursor: move; display: flex; align-items: center; justify-content: center; }
 .sticker img { width: 100%; image-rendering: pixelated; pointer-events: none; }
-.sticker-text { 
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-    width: 80%; text-align: center; border: none; background: transparent; 
-    outline: none; font-size: 14px; font-weight: bold; resize: none; overflow: hidden; 
+.sticker-text {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 80%; text-align: center; border: none; background: transparent;
+    outline: none; font-size: 14px; font-weight: bold; resize: none; overflow: hidden;
 }
 
-/* --- 이용수칙 (행간 및 소제목 간격 보정) --- */
-.notice-container { 
-    width: 100%; height: 100%; display: flex; flex-direction: column; 
-    align-items: center; justify-content: center; text-align: center; 
-}
-.timer-display { 
-    background: #c0c0c0; border: 2px solid #000; padding: 25px 60px; margin-bottom: 50px; 
-}
-.timer-digits { font-size: 56px; font-family: monospace; font-weight: 900; }
-.notice-title { 
-    font-size: 26px; background: #000; color: #fff; padding: 5px 20px; 
-    display: inline-block; margin-bottom: 40px; 
-}
-.pixel-list { list-style: none; padding: 0; }
-.pixel-list li { margin-bottom: 40px; } /* 수칙 간 간격 */
-.pixel-list strong { 
-    font-size: 20px; display: block; margin-bottom: 2px; /* 소제목-본문 바짝 밀착 */
-}
-.pixel-list span { line-height: 1.8; font-size: 15px; color: #333; display: block; }
+.notice-container { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 100px;}
+.timer-display { background: #c0c0c0; border: 2px solid #000; padding: 20px 40px; margin-bottom: 30px; text-align: center; }
+.timer-digits { font-size: 40px; font-family: monospace; font-weight: bold; }
+.pixel-list { list-style: none; padding: 0; text-align: center; }
+.pixel-list li { margin-bottom: 30px; line-height: 1.6; }
 
-/* 보관함 */
-.archive-container { 
-    width: 100%; height: 100%; display: flex; flex-direction: column; 
-    align-items: center; justify-content: center; 
-}
-.calendar-grid { 
-    display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; 
-    background: #c0c0c0; border: 3px solid #000; padding: 10px; width: 600px; 
-}
-.calendar-day { 
-    height: 60px; background: #fff; border: 1px solid #808080; 
-    display: flex; flex-direction: column; align-items: center; padding-top: 5px; cursor: pointer;
-}
-.calendar-day.today { border: 2px solid #000080; background: #e6f7ff; }
-.has-record::after { 
-    content: ""; display: block; width: 10px; height: 10px; 
-    background: #000080; border-radius: 50%; margin-top: 5px; 
-}
-    display: flex; align-items: center; justify-content: space-between;
-    z-index: 1000; background: #000080; 
-    padding: 5px 10px; border: 2px solid #dfdfdf; 
-    width: 300px; height: 40px;
-}
-.date-display { flex-grow: 1; text-align: center; }
-#date { margin: 0; font-size: 18px; color: #fff; letter-spacing: 1px; }
-.nav-btn { width: 35px; height: 30px; padding: 0 !important; display: flex; align-items: center; justify-content: center; }
-
-#canvas { width: 100vw; height: 100vh; position: relative; }
-.controls { position: fixed; right: 20px; bottom: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; background: #c0c0c0; padding: 10px; border: 2px solid #000; }
-.hidden { display: none !important; }
-
-.btn { padding: 8px 15px; background: #c0c0c0; border: 2px solid #000; border-top-color: #fff; border-left-color: #fff; cursor: pointer; font-family: 'NeoDunggeunmo'; }
-.btn:active { border: 2px solid #000; border-bottom-color: #fff; border-right-color: #fff; box-shadow: inset 1px 1px 0px #000; }
-
-.user-photo { position: absolute; max-width: 250px; cursor: move; z-index: 5; }
-.sticker { position: absolute; cursor: move; display: flex; align-items: center; justify-content: center; z-index: 10; }
-.sticker img { width: 100%; image-rendering: pixelated; pointer-events: none; }
-.sticker-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; text-align: center; border: none; background: transparent; outline: none; font-size: 14px; font-weight: bold; text-shadow: 1.5px 1.5px 0px white, -1.5px -1.5px 0px white; }
-
-.notice-container { padding: 140px 20px 50px; background: rgba(255, 255, 255, 0.85); height: 100vh; box-sizing: border-box; overflow-y: auto; display: flex; flex-direction: column; align-items: center; text-align: center; }
-.timer-display { background: #c0c0c0; border: 3px solid #000; border-top-color: #dfdfdf; border-left-color: #dfdfdf; padding: 20px 40px; margin-bottom: 40px; width: fit-content; box-shadow: 4px 4px 0px rgba(0,0,0,0.2); }
-.timer-digits { font-size: 45px; font-family: monospace; font-weight: bold; letter-spacing: 2px; }
-.notice-title { margin-bottom: 30px; font-size: 28px; text-decoration: underline; }
-.pixel-list { padding: 0; list-style: none; width: 100%; max-width: 800px; }
-.pixel-list li { line-height: 2.2; margin-bottom: 45px; padding: 10px; }
-.pixel-list strong { font-size: 20px; display: inline-block; margin-bottom: 10px; color: #000080; }
-
-.archive-container { padding: 120px 50px 50px; background: rgba(255, 255, 255, 0.9); height: 100%; box-sizing: border-box; overflow-y: auto; }
-.calendar-header { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 20px; }
-.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; background: #c0c0c0; border: 3px solid #000; padding: 10px; }
-.calendar-day-label { text-align: center; background: #000080; color: white; padding: 5px; font-size: 12px; }
-.calendar-day { height: 70px; background: #fff; border: 1px solid #808080; display: flex; flex-direction: column; align-items: center; cursor: pointer; padding-top: 5px; }
-.calendar-day:hover { background: #ffffcc; }
-.calendar-day.empty { background: #dfdfdf; cursor: default; }
-.calendar-day.today { border: 2px solid #000080; background: #e6f7ff; }
-.has-record::after { content: "😊"; font-size: 24px; margin-top: 5px; color: #ff00ff; filter: drop-shadow(1px 1px 0px #000); }
+.archive-container { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; background: #c0c0c0; border: 2px solid #000; padding: 10px; width: 90%; max-width: 500px; }
+.calendar-day { height: 50px; background: #fff; border: 1px solid #808080; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; }
+.calendar-day.today { background: #e6f7ff; border: 2px solid #000080; }
+.has-record::after { content: "●"; color: #000080; position: absolute; bottom: 2px; font-size: 10px; }
